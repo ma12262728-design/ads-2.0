@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from
 import { useEffect, ReactNode, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ThemeProvider } from 'next-themes';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
@@ -119,6 +120,7 @@ function AppContent() {
 
       <Footer />
       <WhatsAppButton />
+      <SpeedInsights />
     </div>
   );
 }
