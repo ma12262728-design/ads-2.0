@@ -1090,6 +1090,37 @@ const ManualInvoiceTab = ({ navigate, onComplete, seedOrganicData }: { navigate:
         selected_services: data.services ? data.services.split(',').map(s => s.trim()) : []
       };
 
+  const seedCaseStudies = async () => {
+     if (!confirm("Inject organic case study nodes?")) return;
+     const studies = [
+       {
+         title: "FinTech App Scaling: 300% Growth in 6 Months",
+         client: "Apex Payments",
+         challenge: "High abandonment rates during peak transaction hours due to legacy server bottlenecks.",
+         solution: "Migrated to a serverless architecture using Supabase and Next.js, implementing aggressive edge caching.",
+         impact: "Reduced latency by 85% and increased concurrent transaction volume by 300%.",
+         slug: 'apex-payments-scaling-case-study',
+         category: "FinTech"
+       },
+       {
+         title: "Logistics SaaS: Real-Time Fleet Tracking",
+         client: "RapidMove Logistics",
+         challenge: "Manual dispatching caused delays and lack of visibility for clients.",
+         solution: "Developed a custom dashboard with real-time GPS tracking using Socket.io and React.",
+         impact: "Operational costs reduced by 40% and customer satisfaction scores increased by 60%.",
+         slug: 'rapidmove-logistics-tracking-case-study',
+         category: "Logistics"
+       }
+     ];
+     const { error } = await supabase.from('case_studies').insert(studies);
+     if (error) {
+        console.error(error);
+        alert(`SYNC_FAILURE: ${error.message}`);
+     } else {
+        alert(`SUCCESS: ${studies.length}_ORGANIC_CASE_STUDY_NODES_SYNCHRONIZED`);
+     }
+  };
+
       const columnSet = 'id, name, email, phone, project_specs, amount, status, created_at, selected_services';
       const { data: newOrder, error } = await supabase.from('orders').insert([insertData]).select(columnSet).single();
       

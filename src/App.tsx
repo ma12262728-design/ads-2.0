@@ -19,6 +19,7 @@ import ClientDashboard from './pages/ClientDashboard';
 import Invoice from './pages/Invoice';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
+import CaseStudies from './pages/CaseStudies';
 import { supabase } from './lib/supabase';
 
 function ScrollToTop() {
