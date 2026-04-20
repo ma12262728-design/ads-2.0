@@ -11,7 +11,7 @@ export default function AdminDashboard() {
   const [orders, setOrders] = useState<any[]>([]);
   const [inquiries, setInquiries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'orders' | 'inquiries' | 'manual-invoice' | 'cms' | 'portfolio' | 'blog' | 'diagnostics'>('orders');
+  const [activeTab, setActiveTab] = useState<'orders' | 'inquiries' | 'manual-invoice' | 'cms' | 'portfolio' | 'blog' | 'diagnostics' | 'case-studies'>('orders');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   useEffect(() => {
@@ -276,6 +276,7 @@ export default function AdminDashboard() {
               { id: 'orders', label: 'Telemetry Grid', icon: Database, desc: 'REAL_TIME_DEPLOYMENT' },
               { id: 'inquiries', label: 'Signal Buffer', icon: LayoutDashboard, desc: 'INBOUND_COMMUNICATION' },
               { id: 'portfolio', label: 'Deployments', icon: LayoutTemplate, desc: 'PORTFOLIO_MANAGEMENT' },
+              { id: 'case-studies', label: 'Case Studies', icon: FileText, desc: 'SUCCESS_STORIES_OPERATIONS' },
               { id: 'blog', label: 'Intel Grid', icon: FileText, desc: 'KNOWLEDGE_BASE_OPS' },
               { id: 'cms', label: 'System Logic', icon: Settings2, desc: 'CORE_OS_PARAMETERS' },
               { id: 'manual-invoice', label: 'Protocol Register', icon: Database, desc: 'MANUAL_ASSET_REGISTER' },
@@ -483,6 +484,7 @@ export default function AdminDashboard() {
             )}
 
             {activeTab === 'portfolio' && <PortfolioTab />}
+            {activeTab === 'case-studies' && <CaseStudiesTab />}
             {activeTab === 'blog' && <BlogTab />}
 
             {activeTab === 'manual-invoice' && <ManualInvoiceTab navigate={navigate} onComplete={() => { setActiveTab('orders'); fetchData(); }} seedOrganicData={seedOrganicData} />}
@@ -693,6 +695,44 @@ const PortfolioTab = () => {
        </AnimatePresence>
     </div>
   );
+};
+
+const CaseStudiesTab = () => {
+    const [studies, setStudies] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchStudies();
+    }, []);
+
+    const fetchStudies = async () => {
+        setLoading(true);
+        const { data, error } = await supabase.from('case_studies').select('*');
+        if (data) setStudies(data);
+        setLoading(false);
+    };
+
+    return (
+        <div className="space-y-12">
+           <header className="flex justify-between items-center bg-foreground/[0.02] p-10 border border-foreground/[0.05] rounded-[40px]">
+              <div>
+                <h3 className="text-3xl font-black uppercase tracking-tighter text-foreground italic">Success_Stories</h3>
+                <p className="text-[10px] font-mono font-bold uppercase tracking-[0.4em] text-accent opacity-60">Manage Case Study Entities</p>
+              </div>
+           </header>
+           
+           <div className="grid grid-cols-1 gap-8">
+              {studies.map((study: any) => (
+                <div key={study.id} className="bg-background/40 border border-foreground/[0.05] rounded-[40px] p-10">
+                    <h4 className="text-2xl font-black">{study.title}</h4>
+                    <p className="text-sm opacity-60">{study.client}</p>
+                </div>
+              ))}
+              {studies.length === 0 && !loading && <div className="p-32 text-center opacity-40">NO_DATA_AVAILABLE</div>}
+              {loading && <div className="p-32 text-center animate-pulse">LOADING_DATA...</div>}
+           </div>
+        </div>
+    );
 };
 
 
