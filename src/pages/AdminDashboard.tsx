@@ -11,7 +11,7 @@ export default function AdminDashboard() {
   const [orders, setOrders] = useState<any[]>([]);
   const [inquiries, setInquiries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'orders' | 'inquiries' | 'manual-invoice' | 'cms' | 'portfolio' | 'diagnostics'>('orders');
+  const [activeTab, setActiveTab] = useState<'orders' | 'inquiries' | 'manual-invoice' | 'cms' | 'portfolio' | 'blog' | 'diagnostics'>('orders');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   useEffect(() => {
@@ -275,8 +275,9 @@ export default function AdminDashboard() {
               { id: 'orders', label: 'Telemetry Grid', icon: Database, desc: 'REAL_TIME_DEPLOYMENT' },
               { id: 'inquiries', label: 'Signal Buffer', icon: LayoutDashboard, desc: 'INBOUND_COMMUNICATION' },
               { id: 'portfolio', label: 'Deployments', icon: LayoutTemplate, desc: 'PORTFOLIO_MANAGEMENT' },
+              { id: 'blog', label: 'Intel Grid', icon: FileText, desc: 'KNOWLEDGE_BASE_OPS' },
               { id: 'cms', label: 'System Logic', icon: Settings2, desc: 'CORE_OS_PARAMETERS' },
-              { id: 'manual-invoice', label: 'Protocol Entry', icon: FileText, desc: 'MANUAL_ASSET_REGISTER' },
+              { id: 'manual-invoice', label: 'Protocol Register', icon: Database, desc: 'MANUAL_ASSET_REGISTER' },
             ].map((tab) => {
               const Icon = tab.icon;
               const active = activeTab === tab.id;
@@ -481,6 +482,7 @@ export default function AdminDashboard() {
             )}
 
             {activeTab === 'portfolio' && <PortfolioTab />}
+            {activeTab === 'blog' && <BlogTab />}
 
             {activeTab === 'manual-invoice' && <ManualInvoiceTab navigate={navigate} onComplete={() => { setActiveTab('orders'); fetchData(); }} seedOrganicData={seedOrganicData} />}
             {activeTab === 'cms' && <CMSTab onThemeChange={(t) => setTheme(t)} />}
@@ -840,6 +842,161 @@ const OrderCard = ({ order, onUpdate, theme }: { order: any, onUpdate: (id: stri
   );
 };
 
+const BlogTab = () => {
+  const [posts, setPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({ title: '', excerpt: '', content: '', author: 'Admin', category: 'Tech', image_url: '' });
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    setLoading(true);
+    const { data } = await supabase.from('blog_posts').select('*').order('created_at', { ascending: false });
+    setPosts(data || []);
+    setLoading(false);
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('TERMINATE_DATA_PACKET?')) return;
+    const { error } = await supabase.from('blog_posts').delete().eq('id', id);
+    if (!error) fetchPosts();
+  };
+
+  const handleCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const slug = formData.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    const { error } = await supabase.from('blog_posts').insert([{ ...formData, slug }]);
+    if (!error) {
+      setShowModal(false);
+      setFormData({ title: '', excerpt: '', content: '', author: 'Admin', category: 'Tech', image_url: '' });
+      fetchPosts();
+    } else {
+      alert(error.message);
+    }
+  };
+
+  const seedBlogs = async () => {
+     if (!confirm("Inject sample intelligence packets?")) return;
+     const samples = [
+       { 
+         title: "Mastering E-Commerce in Pakistan: Performance is King", 
+         excerpt: "Why site speed and mobile optimization are the primary drivers of conversion in the local market.", 
+         category: "Business", 
+         author: "ADS Editorial", 
+         content: "# Mastering E-Commerce in Pakistan\n\nIn the rapidly evolving digital landscape of Pakistan, e-commerce isn't just about having a website; it's about **performance**. With the majority of users accessing the internet via mobile data, every millisecond counts.\n\n## Why Speed Matters\n\nLocal users often experience varying network speeds. If your shop takes more than 3 seconds to load, you're losing over 50% of your potential customers. At ADS, we prioritize **Next.js and Edge Caching** to ensure your storefront is accessible instantly from Karachi to Khyber.\n\n### Key Strategies:\n1. **Image Optimization:** Compressing assets without losing retina quality.\n2. **CDN Deployment:** Serving content from local edge nodes.\n3. **Progressive Hydration:** Ensuring the UI is interactable before the full JS bundle loads.\n\nInvesting in a professional architecture is the difference between a failing shop and a market leader.", 
+         slug: 'ecommerce-performance-pakistan' 
+       },
+       { 
+         title: "The Rise of Custom Dashboards for Local SMBs", 
+         excerpt: "How bespoke administrative panels are replacing messy spreadsheets for Pakistani business owners.", 
+         category: "Dev", 
+         author: "ADS Engineering", 
+         content: "# The Shift to Bespoke Dashboards\n\nFor years, local businesses in Pakistan relied on Excel sheets to manage inventory, sales, and employee records. Today, that's changing.\n\n## Automation is the New Standard\n\nA custom dashboard built on **React and Supabase** allows business owners to see real-time telemetry of their operations. Whether it's tracking a delivery in Lahore or monitoring stock levels in Multan, the centralized control is revolutionary.\n\n### Benefits of Custom Solutions:\n* **Real-time Data:** No more waiting for end-of-day reports.\n* **Security:** Role-based access ensures sensitive data stays private.\n* **Scalability:** Your dashboard grows with your business.\n\nStop managing by guess-work. Start managing by data.", 
+         slug: 'custom-dashboards-smb' 
+       },
+       { 
+         title: "Modernizing Legacy Systems: A Strategic Roadmap", 
+         excerpt: "A guide for Pakistani enterprises looking to transition from old-school PHP sites to modern React architectures.", 
+         category: "Strategy", 
+         author: "Admin", 
+         content: "# Transitioning to the Modern Web\n\nMany established enterprises in Pakistan are still running on software built a decade ago. While it \"works,\" it's holding back growth. \n\n## The Risks of Legacy Software\nLegacy systems are prone to security vulnerabilities and are difficult to integrate with modern APIs (like WhatsApp Business or Banking Gateways).\n\n### Our Modernization Approach:\n1. **Audit:** Identifying the bottlenecks in your current stack.\n2. **Micro-Transitions:** Moving critical modules to React/Node first.\n3. **Full Integration:** Synching with modern cloud providers like AWS or GCP.\n\nModernization isn't an expense; it's an insurance policy for your company's future.", 
+         slug: 'modernizing-legacy-systems' 
+       }
+     ];
+     const { error } = await supabase.from('blog_posts').insert(samples);
+     if (error) {
+        console.error(error);
+        alert(`OS_SYNC_FAILURE: ${error.message}\n\nPlease ensure the 'blog_posts' table exists in Supabase.`);
+     } else {
+        fetchPosts();
+        alert("SUCCESS: 3_ORGANIC_INTELLIGENCE_NODES_SYNCHRONIZED");
+     }
+  };
+
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-12">
+       <header className="flex justify-between items-center bg-foreground/[0.02] p-10 rounded-[40px] border border-foreground/[0.05] backdrop-blur-xl">
+          <div>
+            <h2 className="text-5xl font-black text-foreground uppercase tracking-tighter italic">Intelligence <span className="text-accent underline not-italic">Archive</span></h2>
+            <p className="text-[10px] font-mono font-black uppercase tracking-[0.5em] text-muted-foreground mt-2">Managing Knowledge Nodes</p>
+          </div>
+          <div className="flex gap-4">
+            <button onClick={seedBlogs} className="bg-foreground/5 border border-foreground/10 text-muted-foreground hover:text-accent px-8 py-4 rounded-2xl text-[9px] font-black uppercase tracking-widest transition-all cursor-pointer">Seed_Packets</button>
+            <button onClick={() => setShowModal(true)} className="bg-accent text-black px-10 py-5 rounded-2xl font-black uppercase text-[11px] flex items-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(0,240,255,0.3)] cursor-pointer"><Plus size={18} /> New_Intel_TX</button>
+          </div>
+       </header>
+
+       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map(post => (
+            <div key={post.id} className="bg-background/40 border border-foreground/[0.05] p-10 rounded-[32px] group hover:border-accent/40 transition-all flex flex-col h-full relative overflow-hidden">
+               <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+               <div className="flex justify-between items-start mb-6">
+                  <p className="text-[8px] font-mono font-black uppercase tracking-[0.4em] text-accent">PACKET_ID_{post.id.substring(0,6)}</p>
+                  <button onClick={() => handleDelete(post.id)} className="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 cursor-pointer"><X size={16}/></button>
+               </div>
+               <h3 className="text-2xl font-black text-foreground uppercase tracking-tight mb-4 flex-grow">{post.title}</h3>
+               <p className="text-xs text-muted-foreground mb-8 line-clamp-2 leading-relaxed italic opacity-80 group-hover:opacity-100 transition-opacity font-mono">
+                  &gt; {post.excerpt}
+               </p>
+               <div className="mt-auto border-t border-foreground/5 pt-6 flex justify-between items-center text-[10px] font-mono font-black text-muted-foreground/60 group-hover:text-muted-foreground transition-colors uppercase tracking-[0.2em]">
+                  <span className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-accent" /> CAT: {post.category}</span>
+                  <span>SYNC_RX: {new Date(post.created_at).toLocaleDateString()}</span>
+               </div>
+            </div>
+          ))}
+          {loading && <div className="col-span-full py-20 text-center animate-pulse text-accent font-mono text-[10px] tracking-[0.5em] uppercase">RETRIEVING_DATA_CORES_FROM_CLOUD_STACK...</div>}
+          {!loading && posts.length === 0 && <div className="col-span-full py-40 text-center border-2 border-dashed border-foreground/5 rounded-[48px]">
+             <FileText size={48} className="mx-auto mb-6 opacity-10" />
+             <p className="text-[10px] font-mono font-black uppercase tracking-[0.6em] text-muted-foreground opacity-40">INTEL_ARCHIVE_OFFLINE_AWAITING_INPUT</p>
+          </div>}
+       </div>
+
+       <AnimatePresence>
+          {showModal && (
+            <div className="fixed inset-0 z-[200] flex items-center justify-center p-6">
+               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowModal(false)} className="absolute inset-0 bg-background/95 backdrop-blur-3xl" />
+               <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="bg-background border border-foreground/10 w-full max-w-4xl rounded-[48px] p-12 relative z-10 shadow-[0_0_100px_rgba(0,0,0,0.5)] overflow-y-auto max-h-[85vh] custom-scrollbar-premium">
+                  <div className="flex justify-between items-start mb-12">
+                    <div>
+                      <h3 className="text-5xl font-black text-foreground uppercase tracking-tighter italic leading-none">Intelligence <span className="text-secondary underline not-italic">Injection</span></h3>
+                      <p className="text-[10px] font-mono font-black uppercase tracking-[0.5em] text-muted-foreground mt-3">Transmitting New Knowledge Node</p>
+                    </div>
+                    <button onClick={() => setShowModal(false)} className="w-12 h-12 bg-foreground/5 border border-foreground/10 rounded-full flex items-center justify-center text-foreground hover:bg-red-500 hover:text-black hover:border-red-500 transition-all cursor-pointer">
+                        <X size={24} />
+                    </button>
+                  </div>
+                  <form onSubmit={handleCreate} className="space-y-8">
+                     <div className="grid grid-cols-2 gap-8">
+                        <div className="space-y-4">
+                           <label className="text-[10px] uppercase font-black tracking-widest text-muted-foreground ml-1">Subject_Header</label>
+                           <input type="text" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full bg-foreground/[0.02] border border-foreground/10 rounded-2xl px-6 py-5 text-sm font-bold text-foreground outline-none focus:border-accent shadow-inner" placeholder="E.g. Quantum Computing Frameworks" required />
+                        </div>
+                        <div className="space-y-4">
+                           <label className="text-[10px] uppercase font-black tracking-widest text-muted-foreground ml-1">Sector_Category</label>
+                           <input type="text" value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} className="w-full bg-foreground/[0.02] border border-foreground/10 rounded-2xl px-6 py-5 text-sm font-bold text-foreground outline-none focus:border-accent shadow-inner" placeholder="E.g. Cloud" required />
+                        </div>
+                     </div>
+                     <div className="space-y-4">
+                        <label className="text-[10px] uppercase font-black tracking-widest text-muted-foreground ml-1">Intelligence_Excerpt</label>
+                        <textarea value={formData.excerpt} onChange={e => setFormData({...formData, excerpt: e.target.value})} className="w-full bg-foreground/[0.02] border border-foreground/10 rounded-2xl px-6 py-5 text-sm font-bold text-foreground outline-none focus:border-accent h-24 resize-none shadow-inner" placeholder="Brief summary for indexing..." required />
+                     </div>
+                     <div className="space-y-4">
+                        <label className="text-[10px] uppercase font-black tracking-widest text-muted-foreground ml-1">Core_Payload (Markdown_Enabled)</label>
+                        <textarea value={formData.content} onChange={e => setFormData({...formData, content: e.target.value})} className="w-full bg-foreground/[0.02] border border-foreground/10 rounded-3xl px-8 py-6 text-sm font-bold text-foreground outline-none focus:border-accent h-80 font-mono shadow-inner leading-relaxed" placeholder="# Start with a Header\n\nDetail your technical analysis here..." required />
+                     </div>
+                     <button type="submit" className="w-full bg-accent text-black py-8 rounded-2xl font-black uppercase tracking-[0.4em] text-[12px] shadow-[0_0_50px_rgba(0,240,255,0.2)] hover:bg-foreground hover:text-background transition-all transform hover:-translate-y-1 active:scale-95 cursor-pointer">COMMIT_INTELLIGENCE_TO_DB</button>
+                  </form>
+               </motion.div>
+            </div>
+          )}
+       </AnimatePresence>
+    </motion.div>
+  );
+};
+
 const ManualInvoiceTab = ({ navigate, onComplete, seedOrganicData }: { navigate: any, onComplete?: () => void, seedOrganicData: () => void }) => {
   const [data, setData] = useState({ name: '', email: '', phone: '', specs: '', amount: '', currency: 'PKR', services: '' });
   const [creating, setCreating] = useState(false);
@@ -946,7 +1103,7 @@ const ManualInvoiceTab = ({ navigate, onComplete, seedOrganicData }: { navigate:
   );
 };
 
-const CMSTab = () => {
+const CMSTab = ({ onThemeChange }: { onThemeChange?: (theme: 'dark' | 'light') => void }) => {
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -1001,6 +1158,7 @@ const CMSTab = () => {
         // Force a UI update event for other components
         window.dispatchEvent(new Event('ads_config_update'));
         
+        if (onThemeChange) onThemeChange(config.theme as any);
         setSuccess(true);
         setTimeout(() => setSuccess(false), 3000);
       } catch (err: any) {

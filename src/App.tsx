@@ -1,8 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, ReactNode, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
@@ -22,6 +17,8 @@ import Auth from './pages/Auth';
 import AdminDashboard from './pages/AdminDashboard';
 import ClientDashboard from './pages/ClientDashboard';
 import Invoice from './pages/Invoice';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import { supabase } from './lib/supabase';
 
 function ScrollToTop() {
@@ -73,6 +70,8 @@ function AnimatedRoutes() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/dashboard" element={<ClientDashboard />} />
           <Route path="/invoice/:id" element={<Invoice />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
         </Routes>
       </motion.div>
     </AnimatePresence>
@@ -96,8 +95,6 @@ function AppContent() {
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       console.log(`Auth System: Global State Change [${event}]`, session?.user?.email || 'No Active Session');
-      // Global redirection logic removed from here to prevent loops, 
-      // but keeping the listener for session sync.
     });
 
     return () => subscription.unsubscribe();
@@ -115,7 +112,6 @@ function AppContent() {
 
       <Navbar />
       
-      {/* Main Content Area */}
       <main className="flex-grow z-10 relative pb-20">
         <AnimatedRoutes />
       </main>

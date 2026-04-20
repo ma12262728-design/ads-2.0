@@ -69,4 +69,26 @@
     backdrop-filter: blur(40px);
     border-right: 1px solid var(--glass-border);
   }
+
+  @keyframes scan {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(100%); }
+  }
+
+  /* Markdown Styles for Blog */
+  .markdown-body {
+    @apply text-foreground/80 leading-relaxed space-y-8;
+  }
+  .markdown-body h1 { @apply text-4xl font-black uppercase tracking-tight text-foreground mb-12; }
+  .markdown-body h2 { @apply text-3xl font-black uppercase tracking-tight text-foreground mb-10 mt-16; }
+  .markdown-body h3 { @apply text-2xl font-black uppercase tracking-tight text-foreground mb-8 mt-12; }
+  .markdown-body p { @apply text-lg opacity-80 leading-[1.8]; }
+  .markdown-body ul { @apply list-disc list-inside space-y-4 ml-4 mb-8; }
+  .markdown-body ol { @apply list-decimal list-inside space-y-4 ml-4 mb-8; }
+  .markdown-body li { @apply text-lg opacity-80; }
+  .markdown-body blockquote { @apply border-l-4 border-accent pl-8 italic py-4 bg-foreground/[0.02] rounded-r-2xl; }
+  .markdown-body code { @apply bg-foreground/10 px-2 py-0.5 rounded font-mono text-[0.9em] text-accent; }
+  .markdown-body pre { @apply bg-card p-8 rounded-3xl border border-foreground/10 font-mono text-sm overflow-x-auto my-12; }
+  .markdown-body img { @apply rounded-3xl border border-foreground/10 my-16 shadow-2xl; }
+  .markdown-body a { @apply text-accent hover:underline underline-offset-4 decoration-2 transition-all; }
 }
