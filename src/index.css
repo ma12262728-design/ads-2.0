@@ -1,33 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..800&family=Space+Grotesk:wght@300..700&display=swap');
 @import "tailwindcss";
 
+:root {
+  --background: #030303;
+  --foreground: #ffffff;
+  --muted: #888888;
+  --muted-foreground: #a1a1aa;
+  --accent: #00F0FF;
+  --secondary: #8A2BE2;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --nav-bg: rgba(0, 0, 0, 0.6);
+  --card-bg: #09090b;
+}
+
+.light {
+  --background: #ffffff;
+  --foreground: #09090b;
+  --muted: #71717a;
+  --muted-foreground: #52525b;
+  --accent: #2563eb;
+  --secondary: #7c3aed;
+  --glass-bg: rgba(0, 0, 0, 0.02);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --nav-bg: rgba(255, 255, 255, 0.85);
+  --card-bg: #f8fafc;
+}
+
 @theme {
   --color-accent: var(--accent);
   --color-secondary: var(--secondary);
   --color-primary: var(--foreground);
   --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card-bg);
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-}
-
-:root {
-  --background: #030303;
-  --foreground: #ffffff;
-  --accent: #00F0FF;
-  --secondary: #8A2BE2;
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.05);
-  --nav-bg: rgba(0, 0, 0, 0.6);
-}
-
-.light {
-  --background: #ffffff;
-  --foreground: #141414;
-  --accent: #2563eb;
-  --secondary: #7c3aed;
-  --glass-bg: rgba(0, 0, 0, 0.03);
-  --glass-border: rgba(0, 0, 0, 0.1);
-  --nav-bg: rgba(255, 255, 255, 0.8);
 }
 
 @layer base {
