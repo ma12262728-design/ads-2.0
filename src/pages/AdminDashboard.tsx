@@ -201,7 +201,6 @@ export default function AdminDashboard() {
               { id: 'portfolio', label: 'Deployments', icon: LayoutTemplate, desc: 'PORTFOLIO_MANAGEMENT' },
               { id: 'cms', label: 'System Logic', icon: Settings2, desc: 'CORE_OS_PARAMETERS' },
               { id: 'manual-invoice', label: 'Protocol Entry', icon: FileText, desc: 'MANUAL_ASSET_REGISTER' },
-              { id: 'diagnostics', label: 'Shield Test', icon: RefreshCw, desc: 'SUPABASE_HANDSHAKE_VERIF' },
             ].map((tab) => {
               const Icon = tab.icon;
               const active = activeTab === tab.id;
@@ -401,7 +400,6 @@ export default function AdminDashboard() {
             )}
 
             {activeTab === 'portfolio' && <PortfolioTab />}
-            {activeTab === 'diagnostics' && <DiagnosticsTab />}
 
             {activeTab === 'manual-invoice' && <ManualInvoiceTab navigate={navigate} onComplete={() => { setActiveTab('orders'); fetchData(); }} />}
             {activeTab === 'cms' && <CMSTab />}
@@ -411,122 +409,6 @@ export default function AdminDashboard() {
     </div>
   );
 }
-
-const DiagnosticsTab = () => {
-  const [results, setResults] = useState<any[]>([]);
-  const [testing, setTesting] = useState(false);
-
-  const runDiagnostics = async () => {
-    setTesting(true);
-    setResults([]);
-    const tests = [];
-
-    // Test 1: Connectivity
-    try {
-      const start = Date.now();
-      await fetch(supabaseUrl, { method: 'HEAD', mode: 'no-cors' });
-      tests.push({ name: 'NETWORK_LINK', status: 'STABLE', detail: `${Date.now() - start}ms Latency`, icon: RefreshCw });
-    } catch (e) {
-      tests.push({ name: 'NETWORK_LINK', status: 'FAIL', detail: 'Endpoint Unreachable', icon: X });
-    }
-
-    // Test 2: Auth Session
-    try {
-      const { data } = await supabase.auth.getSession();
-      tests.push({ name: 'AUTH_HANDSHAKE', status: data.session ? 'AUTHORIZED' : 'GUEST', detail: data.session ? 'Admin Token Valid' : 'No Active Session', icon: Database });
-    } catch (e) {
-      tests.push({ name: 'AUTH_HANDSHAKE', status: 'ERROR', detail: 'Auth Service Timeout', icon: X });
-    }
-
-    // Test 3: Relational Statistics
-    try {
-      const { count: ordCount, error: ordErr } = await supabase.from('orders').select('*', { count: 'exact', head: true });
-      const { count: inqCount, error: inqErr } = await supabase.from('project_inquiries').select('*', { count: 'exact', head: true });
-      const { count: profCount, error: profErr } = await supabase.from('profiles').select('*', { count: 'exact', head: true });
-      
-      tests.push({ 
-        name: 'NODE_DISTRIBUTION', 
-        status: (!ordErr && !inqErr) ? 'SYNC' : 'ERROR', 
-        detail: `Orders: ${ordCount ?? '?'}, Inq: ${inqCount ?? '?'}, Prof: ${profCount ?? '?'}`,
-        icon: Database 
-      });
-
-      if (ordErr) console.error("Ord Diagnostic:", ordErr);
-    } catch (e) {
-      tests.push({ name: 'NODE_DISTRIBUTION', status: 'FAIL', detail: 'Stats Failure', icon: X });
-    }
-
-    // Test 4: Project Storage (Mock/Simulated check)
-    try {
-      const { data, error } = await supabase.from('portfolio').select('id').limit(1);
-      if (!error) {
-        tests.push({ name: 'STORAGE_OBJECT_SYNC', status: 'ACTIVE', detail: 'Asset Buckets Online', icon: FileText });
-      } else {
-        throw error;
-      }
-    } catch (e) {
-      tests.push({ name: 'STORAGE_OBJECT_SYNC', status: 'STANDBY', detail: 'Archive Table Handshake Pending', icon: CircleDot });
-    }
-
-    setResults(tests);
-    setTesting(false);
-  };
-
-  useEffect(() => {
-    runDiagnostics();
-  }, []);
-
-  return (
-    <motion.div initial={{ opacity: 0, scale: 0.99 }} animate={{ opacity: 1, scale: 1 }} className="max-w-4xl bg-black/40 border border-white/[0.05] shadow-2xl rounded-[60px] p-12 lg:p-24 relative overflow-hidden backdrop-blur-3xl">
-       <header className="mb-20">
-          <div className="flex items-center gap-3 mb-6">
-             <div className="w-12 h-[2px] bg-accent" />
-             <p className="text-[10px] font-mono font-black uppercase tracking-[0.5em] text-accent">OS_SHIELD_VERIFICATION_V4</p>
-          </div>
-          <h3 className="text-5xl lg:text-7xl font-black uppercase tracking-tighter text-white font-display leading-[0.9] italic">Supabase <br/><span className="not-italic text-white/10">Health_Check</span></h3>
-       </header>
-
-       <div className="space-y-6 mb-16">
-          {results.map((r, i) => {
-            const Icon = r.icon;
-            return (
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ delay: i * 0.1 }}
-                key={r.name} 
-                className="flex items-center justify-between p-8 bg-white/[0.02] border border-white/[0.05] rounded-3xl hover:bg-white/[0.04] transition-all group"
-              >
-                 <div className="flex items-center gap-6">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${r.status === 'FAIL' || r.status === 'ERROR' ? 'bg-red-500 text-black' : 'bg-accent/10 text-accent group-hover:bg-accent group-hover:text-black'}`}>
-                       <Icon size={20} className={testing ? 'animate-spin' : ''} />
-                    </div>
-                    <div>
-                       <p className="text-[10px] font-mono font-black uppercase tracking-widest text-gray-500 mb-1">{r.name}</p>
-                       <h4 className="text-xl font-black text-white uppercase tracking-tighter">{r.status}</h4>
-                    </div>
-                 </div>
-                 <div className="text-right">
-                    <p className="text-[9px] font-mono font-bold text-accent/60 uppercase tracking-widest mb-1">LOG_REPORT</p>
-                    <p className="text-[11px] font-mono font-bold text-gray-400">{r.detail}</p>
-                 </div>
-              </motion.div>
-            );
-          })}
-          {testing && <div className="p-10 text-center font-mono text-xs text-accent animate-pulse uppercase tracking-[0.4em]">Handshaking_with_master_kernel...</div>}
-       </div>
-
-       <button 
-         onClick={runDiagnostics} 
-         disabled={testing}
-         className="w-full bg-white text-black hover:bg-accent font-black uppercase tracking-[0.4em] py-8 rounded-3xl transition-all shadow-[0_0_60px_rgba(255,255,255,0.1)] flex items-center justify-center gap-6 group"
-       >
-          <RefreshCw size={20} className={testing ? 'animate-spin' : ''} />
-          {testing ? 'SCANNING_OS_NODES...' : 'INITIATE_FULL_SYSTEM_DIAGNOSTIC'}
-       </button>
-    </motion.div>
-  );
-};
 
 const PortfolioTab = () => {
   const [items, setItems] = useState<any[]>([]);
