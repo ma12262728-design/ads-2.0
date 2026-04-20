@@ -53,7 +53,7 @@ export default function Blog() {
   });
 
   return (
-    <div className="min-h-screen pt-32 pb-20">
+    <div className="min-h-screen pt-20 md:pt-32 pb-20">
       <div className="container-custom">
         <SectionHeader 
           title="Knowledge Core" 
@@ -61,26 +61,26 @@ export default function Blog() {
         />
 
         {/* Search and Filter Bar */}
-        <div className="flex flex-col md:flex-row gap-6 mb-16 items-center justify-between">
+        <div className="flex flex-col gap-6 mb-12 md:mb-16 items-center justify-between">
           <div className="relative w-full md:w-96 group">
             <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-accent transition-colors">
               <Search size={18} />
             </div>
             <input 
               type="text" 
-              placeholder="Search intelligence archives..." 
+              placeholder="Search intelligence..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full bg-foreground/[0.03] border border-foreground/10 rounded-2xl py-4 pl-14 pr-6 outline-none focus:border-accent/40 focus:bg-foreground/[0.05] transition-all font-mono text-sm text-foreground"
             />
           </div>
 
-          <div className="flex flex-wrap gap-3 justify-center">
+          <div className="flex flex-wrap gap-2 justify-center">
             {categories.map(cat => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${
+                className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border ${
                   activeCategory === cat 
                     ? 'bg-accent text-black border-accent shadow-[0_0_20px_rgba(0,240,255,0.3)]' 
                     : 'bg-foreground/[0.03] text-muted-foreground border-foreground/10 hover:border-accent/40 hover:text-foreground'
@@ -93,13 +93,13 @@ export default function Blog() {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map(i => (
-              <div key={i} className="h-[400px] bg-foreground/5 animate-pulse rounded-[32px] border border-foreground/10" />
+              <div key={i} className="h-[350px] md:h-[400px] bg-foreground/5 animate-pulse rounded-[32px] border border-foreground/10" />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPosts.map((post, idx) => (
               <motion.div
                 key={post.id}
@@ -116,33 +116,33 @@ export default function Blog() {
                       className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
                       referrerPolicy="no-referrer"
                     />
-                    <div className="absolute top-6 left-6 bg-accent/90 text-black px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest backdrop-blur-md">
+                    <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-accent/90 text-black px-3 py-1 md:px-4 md:py-1.5 rounded-lg text-[9px] md:text-[10px] font-black uppercase tracking-widest backdrop-blur-md">
                       {post.category}
                     </div>
                   </div>
 
-                  <div className="p-8 flex flex-col flex-grow">
-                    <div className="flex items-center gap-6 text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest mb-6">
-                      <div className="flex items-center gap-2">
-                        <Calendar size={12} className="text-secondary" />
+                  <div className="p-6 md:p-8 flex flex-col flex-grow">
+                    <div className="flex items-center gap-4 text-[9px] md:text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest mb-4">
+                      <div className="flex items-center gap-1.5">
+                        <Calendar size={11} className="text-secondary" />
                         {new Date(post.created_at).toLocaleDateString()}
                       </div>
-                      <div className="flex items-center gap-2">
-                        <User size={12} className="text-accent" />
+                      <div className="flex items-center gap-1.5">
+                        <User size={11} className="text-accent" />
                         {post.author}
                       </div>
                     </div>
 
-                    <h3 className="text-2xl font-black text-foreground uppercase tracking-tight leading-tight mb-4 group-hover:text-accent transition-colors">
+                    <h3 className="text-xl md:text-2xl font-black text-foreground uppercase tracking-tight leading-tight mb-3 group-hover:text-accent transition-colors">
                       {post.title}
                     </h3>
                     
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-8 line-clamp-3">
+                    <p className="text-muted-foreground text-xs md:text-sm leading-relaxed mb-6 line-clamp-2 md:line-clamp-3">
                       {post.excerpt}
                     </p>
 
-                    <div className="mt-auto flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-accent opacity-0 group-hover:opacity-100 transition-all translate-x-[-10px] group-hover:translate-x-0">
-                      Access Intelligence <ArrowRight size={14} />
+                    <div className="mt-auto flex items-center gap-2 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-accent opacity-0 group-hover:opacity-100 transition-all translate-x-[-10px] group-hover:translate-x-0">
+                      Access Intelligence <ArrowRight size={12} />
                     </div>
                   </div>
                 </Link>

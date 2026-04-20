@@ -63,7 +63,7 @@ export default function Home() {
               {doubleTestimonials.map((testimonial, i) => (
                 <div 
                   key={i} 
-                  className="w-[320px] md:w-[400px] shrink-0 glass-card p-6 md:p-8 rounded-3xl hover:border-accent/40 transition-all duration-300 group flex flex-col"
+                  className="w-[280px] md:w-[400px] shrink-0 glass-card p-6 md:p-8 rounded-3xl hover:border-accent/40 transition-all duration-300 group flex flex-col"
                 >
                   <div className="flex gap-1 mb-4 text-accent drop-shadow-[0_0_5px_rgba(0,240,255,0.8)]">
                     {[...Array(5)].map((_, j) => (
