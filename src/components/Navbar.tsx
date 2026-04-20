@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { Menu, X, Lock, LogOut, User } from 'lucide-react';
+import { Menu, X, LogOut, User, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTheme } from 'next-themes';
 import { supabase } from '../lib/supabase';
 
 const navLinks = [
@@ -18,8 +19,11 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [session, setSession] = useState<any>(null);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
@@ -48,6 +52,8 @@ export default function Navbar() {
 
   const isAdmin = session?.user?.email === 'ripperwhite@yahoo.com';
 
+  if (!mounted) return null;
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -55,21 +61,23 @@ export default function Navbar() {
       }`}
     >
       <div className="container-custom">
-        <div className={`liquid-glass rounded-full px-8 py-3 flex justify-between items-center transition-all duration-500 ${
-           scrolled ? 'shadow-[0_10px_30px_rgba(0,0,0,0.8)] border-white/10' : 'border-transparent shadow-none bg-black/40'
-        }`}>
+        <div className={`liquid-glass rounded-full px-8 py-3 flex justify-between items-center transition-all duration-500 border ${
+           scrolled 
+             ? 'shadow-[0_10px_30px_rgba(0,0,0,0.1)] border-white/10 dark:border-white/10' 
+             : 'border-transparent shadow-none bg-black/40 dark:bg-black/40'
+        } ${theme === 'light' ? 'bg-white/80 border-black/5 shadow-lg' : ''}`}>
           <Link to="/" className="flex items-center gap-4 group">
             <div className="bg-gradient-to-r from-accent to-secondary p-2.5 rounded-xl group-hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(0,240,255,0.3)] border border-white/20">
               <span className="text-white font-black text-xs tracking-tighter mix-blend-overlay">ADS</span>
             </div>
-            <span className="text-xl font-display font-extrabold text-white tracking-[-0.04em] uppercase">
+            <span className="text-xl font-display font-extrabold text-foreground tracking-[-0.04em] uppercase">
               Ammar<span className="text-accent underline decoration-accent/50 underline-offset-4 decoration-2 tech-glow">Digital</span> <span className="hidden sm:inline font-sans font-light opacity-50 tracking-widest text-sm align-middle ml-1">SOLUTION</span>
             </span>
           </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-2">
-            <div className="flex items-center bg-white/5 rounded-full p-1.5 gap-1 mr-4 border border-white/10">
+            <div className="flex items-center bg-foreground/5 rounded-full p-1.5 gap-1 mr-4 border border-foreground/10">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.path}
@@ -77,8 +85,8 @@ export default function Navbar() {
                   className={({ isActive }) =>
                     `text-[10px] font-bold px-5 py-2 rounded-full transition-all duration-300 tracking-[0.2em] uppercase ${
                       isActive 
-                        ? 'bg-white/10 text-accent shadow-[0_0_10px_rgba(0,240,255,0.2)] border border-accent/20' 
-                        : 'text-gray-text hover:text-white hover:bg-white/5'
+                        ? 'bg-foreground/10 text-accent shadow-[0_0_10px_rgba(0,240,255,0.1)] border border-accent/20' 
+                        : 'text-gray-text hover:text-foreground hover:bg-foreground/5'
                     }`
                   }
                 >
@@ -88,12 +96,20 @@ export default function Navbar() {
             </div>
             
             <div className="flex gap-2 mr-2">
+              <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-foreground/5 border border-foreground/10 text-foreground hover:bg-foreground/10 transition-all mr-2"
+                aria-label="Toggle Theme"
+              >
+                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+              </button>
+
               {session ? (
                 <>
-                  <Link to={isAdmin ? "/admin" : "/dashboard"} className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-accent hover:text-white transition-colors rounded-full flex items-center gap-2">
+                  <Link to={isAdmin ? "/admin" : "/dashboard"} className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-accent hover:text-foreground transition-colors rounded-full flex items-center gap-2">
                     <User size={12} /> {isAdmin ? 'Admin' : 'Dashboard'}
                   </Link>
-                  <button onClick={handleLogout} className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-red-400 hover:text-red-300 transition-colors rounded-full flex items-center gap-2">
+                  <button onClick={handleLogout} className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-red-500 hover:text-red-400 transition-colors rounded-full flex items-center gap-2">
                     <LogOut size={12} /> Exit
                   </button>
                 </>
@@ -102,7 +118,7 @@ export default function Navbar() {
                   <Link to="/auth?mode=signin" className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-text hover:text-accent transition-colors rounded-full flex items-center">
                     Sign In
                   </Link>
-                  <Link to="/auth?mode=signup" className="btn-bold-secondary text-[10px] py-1.5 px-4 font-bold uppercase tracking-widest rounded-full border border-white/10 hover:border-accent flex items-center">
+                  <Link to="/auth?mode=signup" className="btn-bold-secondary text-[10px] py-1.5 px-4 font-bold uppercase tracking-widest rounded-full border border-foreground/10 hover:border-accent flex items-center">
                     Sign Up
                   </Link>
                 </>
@@ -120,8 +136,14 @@ export default function Navbar() {
           {/* Mobile Actions */}
           <div className="flex md:hidden items-center gap-2">
             <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="p-2 text-foreground hover:text-accent transition-colors"
+            >
+              {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
+            </button>
+            <button
               onClick={toggleMenu}
-              className="p-2 text-primary dark:text-white hover:text-accent transition-colors"
+              className="p-2 text-foreground hover:text-accent transition-colors"
               aria-label="Toggle Navigation"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -139,7 +161,7 @@ export default function Navbar() {
             exit={{ opacity: 0, scale: 0.95, y: -20 }}
             className="absolute top-full left-0 right-0 z-40 container-custom mt-2 md:hidden"
           >
-            <div className="liquid-glass-high rounded-3xl p-8 flex flex-col gap-6 shadow-2xl border border-white/10">
+            <div className={`liquid-glass-high rounded-3xl p-8 flex flex-col gap-6 shadow-2xl border border-white/10 ${theme === 'light' ? 'bg-white border-black/5 shadow-xl' : ''}`}>
               {navLinks.map((link) => (
                 <NavLink
                   key={link.path}
@@ -147,7 +169,7 @@ export default function Navbar() {
                   onClick={() => setIsOpen(false)}
                   className={({ isActive }) =>
                     `text-lg font-display font-extrabold uppercase tracking-widest transition-colors duration-300 ${
-                      isActive ? 'text-accent drop-shadow-[0_0_8px_rgba(0,240,255,0.5)]' : 'text-gray-text hover:text-white'
+                      isActive ? 'text-accent drop-shadow-[0_0_8px_rgba(0,240,255,0.5)]' : 'text-gray-text hover:text-foreground'
                     }`
                   }
                 >

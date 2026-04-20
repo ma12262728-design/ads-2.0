@@ -22,18 +22,23 @@ const STYLES = `
   font-family: 'Plus Jakarta Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   
-  --pill-bg-1: rgba(255, 255, 255, 0.03);
-  --pill-bg-2: rgba(255, 255, 255, 0.01);
-  --pill-shadow: rgba(0, 0, 0, 0.5);
-  --pill-highlight: rgba(255, 255, 255, 0.1);
-  --pill-inset-shadow: rgba(0, 0, 0, 0.8);
-  --pill-border: rgba(255, 255, 255, 0.08);
+  --pill-bg-1: var(--glass-bg);
+  --pill-bg-2: var(--glass-bg);
+  --pill-shadow: rgba(0, 0, 0, 0.1);
+  --pill-highlight: var(--glass-border);
+  --pill-inset-shadow: rgba(0, 0, 0, 0.05);
+  --pill-border: var(--glass-border);
   
-  --pill-bg-1-hover: rgba(255, 255, 255, 0.08);
-  --pill-bg-2-hover: rgba(255, 255, 255, 0.02);
-  --pill-border-hover: rgba(0, 240, 255, 0.5);
+  --pill-bg-1-hover: var(--glass-bg);
+  --pill-bg-2-hover: var(--glass-bg);
+  --pill-border-hover: var(--accent);
   --pill-shadow-hover: rgba(0, 240, 255, 0.2);
-  --pill-highlight-hover: rgba(0, 240, 255, 0.4);
+  --pill-highlight-hover: var(--accent);
+}
+
+.light .cinematic-hero-wrapper {
+  --pill-shadow: rgba(0, 0, 0, 0.05);
+  --pill-inset-shadow: transparent;
 }
 
 @keyframes hero-breathe {
@@ -68,8 +73,8 @@ const STYLES = `
 .hero-bg-grid {
   background-size: 60px 60px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, var(--glass-border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--glass-border) 1px, transparent 1px);
   mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
   -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
 }
@@ -78,8 +83,8 @@ const STYLES = `
 .hero-aurora {
   background: radial-gradient(
     circle at 50% 50%, 
-    rgba(0, 240, 255, 0.15) 0%, 
-    rgba(138, 43, 226, 0.15) 40%, 
+    color-mix(in srgb, var(--accent) 15%, transparent), 
+    color-mix(in srgb, var(--secondary) 15%, transparent) 40%, 
     transparent 70%
   );
 }
@@ -113,19 +118,24 @@ const STYLES = `
   font-weight: 900;
   letter-spacing: -0.05em;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
-  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.1) 60%);
+  -webkit-text-stroke: 1px var(--glass-border);
+  background: linear-gradient(180deg, transparent 0%, var(--foreground) 60%);
   -webkit-background-clip: text;
   background-clip: text;
+  opacity: 0.05;
+}
+
+.light .hero-giant-bg-text {
+  opacity: 0.03;
 }
 
 /* Metallic Text Glow */
 .hero-text-glow {
-  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.4) 100%);
+  background: linear-gradient(180deg, var(--foreground) 0%, color-mix(in srgb, var(--foreground) 40%, transparent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0px 0px 20px rgba(0, 240, 255, 0.3));
+  filter: drop-shadow(0px 0px 20px color-mix(in srgb, var(--accent) 30%, transparent));
 }
 `;
 
@@ -211,11 +221,11 @@ MagneticButton.displayName = "MagneticButton";
 // -------------------------------------------------------------------------
 const MarqueeItem = () => (
   <div className="flex items-center space-x-12 px-6">
-    <span className="text-white">Digital Innovation</span> <span className="text-secondary opacity-60">✦</span>
-    <span className="text-white">Modern Branding</span> <span className="text-accent opacity-60">✦</span>
-    <span className="text-white">Scalable Platforms</span> <span className="text-secondary opacity-60">✦</span>
-    <span className="text-white">Cloud Infrastructure</span> <span className="text-accent opacity-60">✦</span>
-    <span className="text-white">Absolute Precision</span> <span className="text-secondary opacity-60">✦</span>
+    <span className="text-foreground">Digital Innovation</span> <span className="text-secondary opacity-60">✦</span>
+    <span className="text-foreground">Modern Branding</span> <span className="text-accent opacity-60">✦</span>
+    <span className="text-foreground">Scalable Platforms</span> <span className="text-secondary opacity-60">✦</span>
+    <span className="text-foreground">Cloud Infrastructure</span> <span className="text-accent opacity-60">✦</span>
+    <span className="text-foreground">Absolute Precision</span> <span className="text-secondary opacity-60">✦</span>
   </div>
 );
 
@@ -268,7 +278,7 @@ export function CinematicHero() {
       
       <div
         ref={wrapperRef}
-        className="relative min-h-[100vh] w-full flex flex-col justify-center items-center overflow-hidden bg-[#030303] text-white cinematic-hero-wrapper z-20 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+        className="relative min-h-[100vh] w-full flex flex-col justify-center items-center overflow-hidden bg-[var(--background)] text-foreground cinematic-hero-wrapper z-20 shadow-[0_20px_50px_rgba(0,0,0,0.1)]"
       >
         
         <div className="hero-aurora absolute left-1/2 top-1/2 h-[80vh] w-[90vw] -translate-x-1/2 -translate-y-1/2 animate-hero-breathe rounded-[50%] blur-[80px] pointer-events-none z-0 opacity-40" />
@@ -276,13 +286,13 @@ export function CinematicHero() {
 
         <div
           ref={giantTextRef}
-          className="hero-giant-bg-text absolute top-[10vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none text-white/5"
+          className="hero-giant-bg-text absolute top-[10vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none text-foreground/5"
         >
           AMMAR
         </div>
 
-        <div className="absolute bottom-12 left-0 w-full overflow-hidden border-y border-white/5 bg-black/60 backdrop-blur-md py-4 z-10 rotate-2 scale-110 shadow-2xl">
-          <div className="flex w-max animate-hero-scroll-marquee text-xs md:text-sm font-bold tracking-[0.3em] text-white/60 uppercase">
+        <div className="absolute bottom-12 left-0 w-full overflow-hidden border-y border-foreground/5 bg-[var(--background)]/60 backdrop-blur-md py-4 z-10 rotate-2 scale-110 shadow-2xl">
+          <div className="flex w-max animate-hero-scroll-marquee text-xs md:text-sm font-bold tracking-[0.3em] text-foreground/60 uppercase">
             <MarqueeItem />
             <MarqueeItem />
           </div>
@@ -294,7 +304,7 @@ export function CinematicHero() {
           </p>
           <h2
             ref={headingRef}
-            className="text-5xl md:text-[100px] font-black tracking-tighter mb-12 text-center text-white leading-[0.85] uppercase font-display italic drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+            className="text-5xl md:text-[100px] font-black tracking-tighter mb-12 text-center text-foreground leading-[0.85] uppercase font-display italic drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
           >
             {config.mainHeadline.split(' ')[0]} <br /> <span className="not-italic text-transparent bg-clip-text bg-gradient-to-r from-accent to-secondary tech-glow">{config.mainHeadline.split(' ').slice(1).join(' ')}</span>
           </h2>
@@ -309,11 +319,11 @@ export function CinematicHero() {
                 Order Now
               </MagneticButton>
               
-              <MagneticButton as="a" href="/contact" className="liquid-glass px-10 py-5 rounded-[40px] text-white font-bold text-sm md:text-base flex items-center gap-3 group hover:bg-white/5 transition-all">
+              <MagneticButton as="a" href="/contact" className="glass-card px-10 py-5 rounded-[40px] text-foreground font-bold text-sm md:text-base flex items-center gap-3 group hover:bg-foreground/5 transition-all">
                 Contact Us
               </MagneticButton>
 
-              <MagneticButton as="a" href="/auth" className="liquid-glass px-10 py-5 rounded-[40px] text-accent font-bold text-sm md:text-base flex items-center gap-3 group hover:bg-white/5 transition-all border border-accent/30 shadow-[0_0_15px_rgba(0,240,255,0.1)]">
+              <MagneticButton as="a" href="/auth" className="glass-card px-10 py-5 rounded-[40px] text-accent font-bold text-sm md:text-base flex items-center gap-3 group hover:bg-foreground/5 transition-all border border-accent/30 shadow-[0_0_15px_rgba(0,240,255,0.1)]">
                 Sign Up
               </MagneticButton>
             </div>

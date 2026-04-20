@@ -63,9 +63,7 @@ export default function AdminDashboard() {
         .eq('id', user.id)
         .maybeSingle();
 
-      const isAdmin = profile?.role === 'admin' || 
-                      email === 'ripperwhite@yahoo.com' || 
-                      email === 'ubldigital24@gmail.com';
+      const isAdmin = profile?.role === 'admin' || email === 'ripperwhite@yahoo.com';
 
       if (!isAdmin) {
         alert(`Access Denied: ${email} lacks administrative clearance.`);
@@ -739,7 +737,7 @@ const OrderCard = ({ order, onUpdate }: { order: any, onUpdate: (id: string, fie
             </div>
             <div className="text-right relative z-10">
                <p className="text-[8px] font-mono font-black uppercase tracking-[0.4em] text-gray-600 mb-2">DATETIME_SYNC</p>
-               <span className="text-[11px] font-mono font-bold text-gray-500 uppercase tracking-widest">{new Date(order.created_at).toLocaleDateString()} // {new Date(order.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+               <span className="text-[11px] font-mono font-bold text-gray-500 uppercase tracking-widest">{new Date(order.created_at).toLocaleDateString()}</span>
             </div>
          </div>
       )}
@@ -785,10 +783,13 @@ const ManualInvoiceTab = ({ navigate, onComplete }: { navigate: any, onComplete?
   };
 
   const seedOrganicData = async () => {
-    if (!confirm("Initiate organic historical data injection (46 nodes)?")) return;
+    if (!confirm("Wipe existing telemetry and re-sync 47 organic nodes?")) return;
     setCreating(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      // 1. Clear existing nodes
+      const { error: clearError } = await supabase.from('orders').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+      if (clearError) throw clearError;
+
       const pakNames = ["Ahmed Hassan", "Zainab Malik", "Bilal Khan", "Sara Ahmed", "Usmaan Ali", "Hina Raza", "Faran Saeed", "Mehak Sheikh", "Shoaib Akram", "Iqra Fatima"];
       const pakCities = ["Lahore", "Karachi", "Islamabad", "Faisalabad", "Multan", "Peshawar", "Mandi Bahauddin"];
       const chinaNames = ["Wei Chen", "Li Jing", "Zhang Min", "Wang Wei", "Liu Yang", "Zhao Lei"];
@@ -797,7 +798,8 @@ const ManualInvoiceTab = ({ navigate, onComplete }: { navigate: any, onComplete?
 
       const bulkOrders = [];
       
-      // Node 0: Rizwan Akram (Primary Historical Asset)
+      // Node 0: Rizwan Akram (Primary Historical Asset) - Evening 04 April 2026
+      const rizwanDate = new Date(2026, 3, 4, 19, 30, 0); // Month is 0-indexed, so 3 is April
       bulkOrders.push({
         name: "Rizwan Akram",
         email: "rizwan.akram@ecommerce.pk",
@@ -805,7 +807,7 @@ const ManualInvoiceTab = ({ navigate, onComplete }: { navigate: any, onComplete?
         project_specs: "ARCH_MASTER: Custom Business Website with E-Commerce API integration. High-fidelity warehouse sync protocol.",
         amount: "PKR 100,000",
         status: "completed",
-        created_at: new Date(2026, 3, 15).toISOString(),
+        created_at: rizwanDate.toISOString(),
         selected_services: ["Custom Web Design", "E-Commerce Development", "API Integration"]
       });
       
@@ -850,10 +852,10 @@ const ManualInvoiceTab = ({ navigate, onComplete }: { navigate: any, onComplete?
 
       const { error } = await supabase.from('orders').insert(bulkOrders);
       if (error) throw error;
-      alert("MISSION_SUCCESS: 46 organic nodes injected into telemetry grid.");
+      alert("MISSION_SUCCESS: OS Kernel cleared and 47 historical nodes re-synchronized.");
       if (onComplete) onComplete();
     } catch (e: any) {
-      alert(`SEED_FAILURE: ${e.message}`);
+      alert(`WIPE_SYNC_FAILURE: ${e.message}`);
     } finally {
       setCreating(false);
     }

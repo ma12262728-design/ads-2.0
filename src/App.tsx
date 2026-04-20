@@ -107,10 +107,10 @@ function AppContent() {
     <div className="flex flex-col min-h-screen selection:bg-accent selection:text-black transition-colors duration-500 overflow-x-hidden relative">
       <ScrollToTop />
       {/* Persistent High-Tech Background Elements */}
-      <div className="fixed inset-0 pointer-events-none -z-10 bg-[#030303]">
-        <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-accent/10 blur-[150px] rounded-full animate-pulse opacity-60" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary/10 blur-[150px] rounded-full animate-pulse delay-1000 opacity-50" />
-        <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] bg-accent/5 blur-[100px] rounded-full tech-glow opacity-30" />
+      <div className="fixed inset-0 pointer-events-none -z-10 bg-[var(--background)]">
+        <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-accent/10 blur-[150px] rounded-full animate-pulse opacity-60 dark:opacity-60" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary/10 blur-[150px] rounded-full animate-pulse delay-1000 opacity-50 dark:opacity-50" />
+        <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] bg-accent/5 blur-[100px] rounded-full tech-glow opacity-30 dark:opacity-30" />
       </div>
 
       <Navbar />

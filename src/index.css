@@ -2,16 +2,38 @@
 @import "tailwindcss";
 
 @theme {
-  --color-accent: #00F0FF;
-  --color-secondary: #8A2BE2;
+  --color-accent: var(--accent);
+  --color-secondary: var(--secondary);
+  --color-primary: var(--foreground);
+  --color-background: var(--background);
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 }
 
+:root {
+  --background: #030303;
+  --foreground: #ffffff;
+  --accent: #00F0FF;
+  --secondary: #8A2BE2;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --nav-bg: rgba(0, 0, 0, 0.6);
+}
+
+.light {
+  --background: #ffffff;
+  --foreground: #141414;
+  --accent: #2563eb;
+  --secondary: #7c3aed;
+  --glass-bg: rgba(0, 0, 0, 0.03);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --nav-bg: rgba(255, 255, 255, 0.8);
+}
+
 @layer base {
   body {
-    background-color: #030303;
-    color: #ffffff;
+    background-color: var(--background);
+    color: var(--foreground);
     font-family: var(--font-sans);
   }
 }
@@ -26,15 +48,15 @@
   }
   
   .glass-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--glass-bg);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
   }
   
   .glass-nav {
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--nav-bg);
     backdrop-filter: blur(40px);
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 1px solid var(--glass-border);
   }
 }
