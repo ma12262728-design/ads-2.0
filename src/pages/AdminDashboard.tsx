@@ -700,6 +700,9 @@ const PortfolioTab = () => {
 const CaseStudiesTab = () => {
     const [studies, setStudies] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [showModal, setShowModal] = useState(false);
+    const [newStudy, setNewStudy] = useState({ title: '', client: '', challenge: '', solution: '', impact: '', category: '' });
+    const [saving, setSaving] = useState(false);
 
     useEffect(() => {
         fetchStudies();
