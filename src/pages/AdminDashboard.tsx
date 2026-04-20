@@ -68,7 +68,7 @@ export default function AdminDashboard() {
         .eq('id', user.id)
         .maybeSingle();
 
-      const isAdmin = profile?.role === 'admin' || email === 'ripperwhite@yahoo.com';
+      const isAdmin = email === 'ripperwhite@yahoo.com' || email === 'ubldigital24@gmail.com' || profile?.role === 'admin';
 
       if (!isAdmin) {
         alert(`Access Denied: ${email} lacks administrative clearance.`);
@@ -81,8 +81,9 @@ export default function AdminDashboard() {
       console.error("Critical Auth/Data failure:", err);
       // Fallback: if we are at least logged in according to storage, try fetching
       const { data: { session } } = await supabase.auth.getSession();
-      if (session?.user?.email === 'ripperwhite@yahoo.com') {
-         setUserEmail(session.user.email);
+      const fallbackEmail = session?.user?.email;
+      if (fallbackEmail === 'ripperwhite@yahoo.com' || fallbackEmail === 'ubldigital24@gmail.com') {
+         setUserEmail(fallbackEmail);
          await fetchData();
       } else {
          navigate('/auth');
@@ -904,15 +905,87 @@ const BlogTab = () => {
          author: "Admin", 
          content: "# Transitioning to the Modern Web\n\nMany established enterprises in Pakistan are still running on software built a decade ago. While it \"works,\" it's holding back growth. \n\n## The Risks of Legacy Software\nLegacy systems are prone to security vulnerabilities and are difficult to integrate with modern APIs (like WhatsApp Business or Banking Gateways).\n\n### Our Modernization Approach:\n1. **Audit:** Identifying the bottlenecks in your current stack.\n2. **Micro-Transitions:** Moving critical modules to React/Node first.\n3. **Full Integration:** Synching with modern cloud providers like AWS or GCP.\n\nModernization isn't an expense; it's an insurance policy for your company's future.", 
          slug: 'modernizing-legacy-systems' 
+       },
+       {
+         title: "The Impact of WhatsApp Business API",
+         excerpt: "A technical deep-dive into how integrating WhatsApp directly into your CRM can double your response rates.",
+         category: "Marketing",
+         author: "ADS Editorial",
+         content: "# Revolutionizing Customer Support with WhatsApp\n\nIn Pakistan, WhatsApp is the primary mode of communication. For a business, this means your customers are already there. If you aren't integrating **WhatsApp Business API** into your website, you're missing out on the highest conversion channel available.\n\n## Why API over Personal App?\nWhile the personal app is great for small stores, the API allows for: \n* **Automated Responses:** Immediate greeting when a customer clicks 'Inquiry'.\n* **Shared Team Inbox:** Multiple agents managing the same number.\n* **Transaction Notifications:** Sending order updates automatically.\n\nAt ADS, we build custom webhooks that connect your dashboard inquiries directly to a WhatsApp bot, ensuring no lead is ever left cold.",
+         slug: 'whatsapp-business-api-impact'
+       },
+       {
+         title: "Cyber-Security for Local Payment Gateways",
+         excerpt: "Protecting user data and transaction logs in an era of increasing digital threats.",
+         category: "Security",
+         author: "Lead Security Architect",
+         content: "# Hardening Your Digital Assets\n\nAs digital payments grow in Pakistan through services like Sadapay, NayaPay, and bank integrations, security is no longer optional. A single breach can destroy years of brand trust.\n\n## Our Security Architecture\nWe implement **Zero-Trust** principles for every project we deploy. \n\n### Core Security Protocols:\n1. **End-to-End Encryption:** All sensitive data is encrypted at rest and in transit.\n2. **JWT Authentication:** Robust session management preventing unauthorized access to your admin portal.\n3. **Database Row Level Security (RLS):** Every query is verified at the database level.\n\nBuilding fast is important, but building secure is vital.",
+         slug: 'local-payment-security'
+       },
+       {
+         title: "Scalable Infrastructure for Growing Startups",
+         excerpt: "How to choose between AWS, Azure, and Google Cloud for your Pakistani startup's needs.",
+         category: "Cloud",
+         author: "Admin",
+         content: "# Scaling Beyond the Initial Deployment\n\nWhen you start, a single server might be enough. But what happens when 10,000 users visit your site simultaneously? This is where **Auto-scaling Infrastructure** comes into play.\n\n## Choosing the Right Provider\nWhether it's AWS, GCP, or Azure, the choice depends on your specific needs:\n* **Compute Power:** Handling heavy data processing.\n* **Database Latency:** Ensuring quick reads/writes for global users.\n* **Cost Efficiency:** Optimizing 'Pay-as-you-go' models to save budget.\n\nOur architecture is designed to handle spikes without manual intervention, using **Docker and Kubernetes** for absolute stability.",
+         slug: 'scalable-startup-infra'
+       },
+       {
+         title: "Local SEO: Dominating Search in Pakistan",
+         excerpt: "A tactical guide to ranking higher for 'near me' searches and local intent in major cities.",
+         category: "Marketing",
+         author: "SEO Lead",
+         content: "# Winning the Local Search Game\n\nSEO in Pakistan requires a different approach than global markets. Local intent, language nuances, and Google Business Profile optimization are the primary drivers of traffic.\n\n## Key Technical Tactics:\n1. **Localized Schema Markup:** Telling search engines exactly where you are.\n2. **Citation Consistency:** Ensuring your business name, address, and phone (NAP) are identical across all directories.\n3. **Neighborhood targeting:** Creating content specific to areas like Gulberg (Lahore), Defence (Karachi), or Blue Area (Islamabad).\n\nIn the local market, visibility is the first step to viability.",
+         slug: 'local-seo-pakistan-guide'
+       },
+       {
+         title: "The ROI of Premium UI/UX in FinTech",
+         excerpt: "Why professional design is a non-negotiable for apps handling financial transactions.",
+         category: "Design",
+         author: "Design Team",
+         content: "# Design as a Trust Mechanism\n\nWhen a user trusts an app with their money, every pixel matters. A laggy UI or confusing navigation doesn't just frustrate; it creates fear. \n\n## UX Pillars for FinTech:\n* **Frictionless Onboarding:** Reducing the time to 'Value'.\n* **Clear Status Indicators:** Always knowing if a transaction is pending or failed.\n* **Biometric Integration:** Seamlessly utilizing FaceID/TouchID for security.\n\nGood design isn't just about 'looks'; it's about reducing cognitive load and building long-term user retention.",
+         slug: 'roi-premium-ux-fintech'
+       },
+       {
+         title: "API-First Development: The Future of Integration",
+         excerpt: "Building decoupled systems that talk to everything from mobile apps to third-party tools.",
+         category: "Dev",
+         author: "Engineering Team",
+         content: "# Building for Connectivity\n\nIn 2026, building a website in isolation is a mistake. Modern systems must be **API-First**, allowing your data to flow seamlessly between your web storefront, mobile app, and client dashboards.\n\n## Why it Matters:\n* **Omnichannel Presence:** Update products once, reflect everywhere.\n* **Future-Proofing:** Easily swap frontends without touching the backend logic.\n* **Third-party Synergy:** Connect with Salesforce, HubSpot, or custom ERPs instantly.\n\nDecoupled architecture is the foundation of digital agility.",
+         slug: 'api-first-development-standard'
+       },
+       {
+         title: "The AI Revolution in Pakistani Tech",
+         excerpt: "How local software houses are integrating Large Language Models (LLMs) to boost developer productivity.",
+         category: "Tech",
+         author: "IT Council",
+         content: "# AI as a Force Multiplier\n\nArtificial Intelligence is no longer just a buzzword in Pakistan's software industry. From automated code reviews to smart testing suites, AI is helping local houses compete on a global scale.\n\n## Implementation Strategies:\n* **Custom Copilot Integrations:** Reducing boilerplate coding time by 40%.\n* **Predictive Maintenance:** Using ML models to find bugs before they hit production.\n* **AI-Powered Customer Support:** Real-time translation for international clients.\n\nInvesting in AI is the key to maintaining a competitive edge in the global export market.",
+         slug: 'ai-revolution-pakistan-tech'
+       },
+       {
+         title: "PWAs: The Native App Killer?",
+         excerpt: "Why Progressive Web Apps are the most cost-effective way for Pakistani startups to reach mobile users.",
+         category: "Business",
+         author: "Product Strategy",
+         content: "# Why Choose PWA Over Native Apps?\n\nFor many startups, the cost of developing separate iOS and Android apps is prohibitive. Progressive Web Apps (PWAs) offer a high-performance alternative that works directly in the browser while feeling like a native app.\n\n## The PWA Advantage:\n1. **Zero Install Friction:** Users don't need to visit an App Store.\n2. **Offline Capabilities:** Service workers allow the app to work without a steady internet connection.\n3. **Push Notifications:** Re-engage users just like a traditional app.\n\nFor most e-commerce and SaaS businesses, a PWA is the smarter, faster way to market.",
+         slug: 'pwa-vs-native-app-strategy'
+       },
+       {
+         title: "Data Privacy Compliance in 2026",
+         excerpt: "Navigating local and international data protection laws to keep your enterprise secure and compliant.",
+         category: "Legal",
+         author: "Compliance Dept",
+         content: "# Understanding the Digital Governance Landscape\n\nAs Pakistan's digital footprint grows, so does the weight of responsibility for data privacy. Compliance with local laws and international standards (like GDPR) is now a requirement for any serious enterprise.\n\n## Your Compliance Checklist:\n* **Data Encryption at Rest:** Ensuring stolen hard drives don't lead to leaked data.\n* **Clear Privacy Policies:** Telling your users exactly what you collect and why.\n* **The Right to be Forgotten:** Allowing users to request full deletion of their profiles.\n\nTrust is the most expensive commodity in the digital age; compliance is how you protect it.",
+         slug: 'data-privacy-compliance-checklist-2026'
        }
      ];
      const { error } = await supabase.from('blog_posts').insert(samples);
      if (error) {
         console.error(error);
-        alert(`OS_SYNC_FAILURE: ${error.message}\n\nPlease ensure the 'blog_posts' table exists in Supabase.`);
+        alert(`OS_SYNC_FAILURE: ${error.message}`);
      } else {
         fetchPosts();
-        alert("SUCCESS: 3_ORGANIC_INTELLIGENCE_NODES_SYNCHRONIZED");
+        alert(`SUCCESS: ${samples.length}_ORGANIC_INTELLIGENCE_NODES_SYNCHRONIZED`);
      }
   };
 
