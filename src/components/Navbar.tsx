@@ -115,12 +115,6 @@ export default function Navbar() {
               )}
             </div>
 
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className={cn(buttonVariants({ variant: "liquid", size: "icon" }), "rounded-full")}
-            >
-              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
             <Link
               to="/order"
               className={cn(buttonVariants({ variant: "liquid", size: "default" }), "text-[10px] md:text-xs py-2 md:py-2.5 px-6 md:px-8 uppercase tracking-widest")}
