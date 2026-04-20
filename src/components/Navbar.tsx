@@ -4,6 +4,8 @@ import { Menu, X, LogOut, User, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useTheme } from 'next-themes';
 import { supabase } from '../lib/supabase';
+import { buttonVariants } from './ui/button';
+import { cn } from '@/lib/utils';
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -63,11 +65,7 @@ export default function Navbar() {
       }`}
     >
       <div className="container-custom">
-        <div className={`liquid-glass rounded-full px-8 py-3 flex justify-between items-center transition-all duration-500 border ${
-           scrolled 
-             ? 'shadow-[0_10px_30px_rgba(0,0,0,0.1)] border-white/10 dark:border-white/10' 
-             : 'border-transparent shadow-none bg-black/40 dark:bg-black/40'
-        } ${theme === 'light' ? 'bg-white/80 border-black/5 shadow-lg' : ''}`}>
+        <div className={`backdrop-blur-3xl bg-white/20 dark:bg-black/20 rounded-full px-8 py-3 flex justify-between items-center transition-all duration-500 border border-white/30 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.1)]`}>
           <Link to="/" className="flex items-center gap-4 group">
             <div className="bg-gradient-to-r from-accent to-secondary p-2.5 rounded-xl group-hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(0,240,255,0.3)] border border-white/20">
               <span className="text-white font-black text-xs tracking-tighter mix-blend-overlay">ADS</span>
@@ -96,16 +94,7 @@ export default function Navbar() {
                 </NavLink>
               ))}
             </div>
-            
-            <div className="flex gap-2 mr-2">
-              <button
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-foreground/5 border border-foreground/10 text-foreground hover:bg-foreground/10 transition-all mr-2"
-                aria-label="Toggle Theme"
-              >
-                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-              </button>
-
+                        <div className="flex gap-2 mr-2">
               {session ? (
                 <>
                   <Link to={isAdmin ? "/admin" : "/dashboard"} className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-accent hover:text-foreground transition-colors rounded-full flex items-center gap-2">
@@ -127,9 +116,15 @@ export default function Navbar() {
               )}
             </div>
 
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className={cn(buttonVariants({ variant: "liquid", size: "icon" }), "rounded-full")}
+            >
+              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
             <Link
               to="/order"
-              className="btn-bold-primary text-[10px] md:text-xs py-2 md:py-2.5 px-6 md:px-8 uppercase tracking-widest rounded-full"
+              className={cn(buttonVariants({ variant: "liquid", size: "default" }), "text-[10px] md:text-xs py-2 md:py-2.5 px-6 md:px-8 uppercase tracking-widest")}
             >
               Initiate Order
             </Link>
@@ -137,12 +132,6 @@ export default function Navbar() {
 
           {/* Mobile Actions */}
           <div className="flex md:hidden items-center gap-2">
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 text-foreground hover:text-accent transition-colors"
-            >
-              {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
-            </button>
             <button
               onClick={toggleMenu}
               className="p-2 text-foreground hover:text-accent transition-colors"

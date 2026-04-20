@@ -8,10 +8,10 @@
   --muted-foreground: #a1a1aa;
   --accent: #00F0FF;
   --secondary: #8A2BE2;
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --nav-bg: rgba(0, 0, 0, 0.6);
-  --card-bg: #09090b;
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --nav-bg: rgba(255, 255, 255, 0.5);
+  --card-bg: #f8fafc;
 }
 
 .light {
@@ -21,10 +21,10 @@
   --muted-foreground: #52525b;
   --accent: #2563eb;
   --secondary: #7c3aed;
-  --glass-bg: rgba(0, 0, 0, 0.02);
-  --glass-border: rgba(0, 0, 0, 0.08);
-  --nav-bg: rgba(255, 255, 255, 0.85);
-  --card-bg: #f8fafc;
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --nav-bg: rgba(255, 255, 255, 0.7);
+  --card-bg: rgba(255, 255, 255, 0.5);
 }
 
 @theme {
@@ -59,15 +59,16 @@
   
   .glass-card {
     background: var(--glass-bg);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(30px);
     border: 1px solid var(--glass-border);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
   
   .glass-nav {
     background: var(--nav-bg);
     backdrop-filter: blur(40px);
-    border-right: 1px solid var(--glass-border);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   }
 
   @keyframes scan {
