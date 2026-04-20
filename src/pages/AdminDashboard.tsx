@@ -822,9 +822,9 @@ const CaseStudiesTab = () => {
                     </button>
                 </div>
               ))}
+              {loading && <div className="p-10 text-center opacity-60">LOADING_...</div>}
+              {!loading && studies.length === 0 && <div className="p-10 text-center opacity-60">NO_DATA_FOUND</div>}
            </div>
-
-           {/* Modal for adding would go here, omitting for brevity in this step */}
         </div>
     );
 };
