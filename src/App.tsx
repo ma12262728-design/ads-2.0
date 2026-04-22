@@ -82,7 +82,7 @@ function AnimatedRoutes() {
 export default function App() {
   const ThemeProviderAny = ThemeProvider as any;
   return (
-    <ThemeProviderAny attribute="class" defaultTheme="dark">
+    <ThemeProviderAny attribute="class" defaultTheme="light">
       <Router>
         <AppContent />
       </Router>

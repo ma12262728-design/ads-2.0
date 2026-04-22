@@ -2,6 +2,7 @@ import { CinematicHero } from '../components/ui/motion-hero';
 import { TESTIMONIALS, BUSINESS_INFO } from '../constants/data';
 import SectionHeader from '../components/SectionHeader';
 import { useADSConfig } from '../hooks/useADSConfig';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
   const config = useADSConfig();
@@ -23,7 +24,7 @@ export default function Home() {
           </div>
           <div>
             <h4 className="font-black uppercase tracking-tight text-lg mb-1 text-foreground">Custom Arch</h4>
-            <p className="text-[10px] font-bold uppercase opacity-50 tracking-widest text-accent text-accent/80">Zero Latency Engineering</p>
+            <p className="text-[10px] font-bold uppercase opacity-50 tracking-widest text-accent/80">Zero Latency Engineering</p>
           </div>
         </div>
 
@@ -52,8 +53,98 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 1. Tech Stack Marquee */}
+      <section className="py-10 border-y border-foreground/5 bg-foreground/[0.02] overflow-hidden flex items-center">
+         <div className="animate-marquee flex gap-16 px-6 items-center w-max">
+            {['React', 'Next.js', 'Node.js', 'TypeScript', 'TailwindCSS', 'AWS', 'Python', 'Figma', 'Docker', 'GraphQL', 'React', 'Next.js', 'Node.js', 'TypeScript', 'TailwindCSS', 'AWS', 'Python', 'Figma', 'Docker', 'GraphQL'].map((tech, i) => (
+                <span key={i} className="text-xl md:text-2xl font-black uppercase text-foreground/20 font-mono tracking-widest">{tech}</span>
+            ))}
+         </div>
+      </section>
+
+      {/* 2. Services Overview */}
+      <section className="py-24 relative container-custom">
+          <SectionHeader title="Core Services" subtitle="WHAT WE DO BEST" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                  { title: "Web Architecture", desc: "High-performance React & Next.js web applications tailored for speed.", icon: "M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" },
+                  { title: "E-Commerce", desc: "Conversion-optimized Shopify and custom scalable stores.", icon: "M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" },
+                  { title: "UI/UX Engineering", desc: "Pixel-perfect, modern designs that captivate and convert.", icon: "M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" },
+                  { title: "Custom APIs", desc: "Robust backend infrastructure, cloud databases, and API development.", icon: "M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" }
+              ].map((service, idx) => (
+                  <div key={idx} className="glass-card p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-300 group">
+                      <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center text-accent mb-6 border border-accent/20 group-hover:scale-110 transition-transform">
+                          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={service.icon} />
+                          </svg>
+                      </div>
+                      <h3 className="font-black text-foreground tracking-tight text-xl mb-3 uppercase">{service.title}</h3>
+                      <p className="text-foreground/50 text-sm font-medium leading-relaxed">{service.desc}</p>
+                  </div>
+              ))}
+          </div>
+      </section>
+
+      {/* 3. Featured Portfolio */}
+      <section className="py-24 relative bg-[var(--background)]/40 border-y border-foreground/5">
+          <div className="container-custom">
+              <SectionHeader title="Featured Works" subtitle="RECENT DEPLOYMENTS" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {[
+                      { 
+                        title: "Fintech Dashboard", 
+                        category: "Web Application", 
+                        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop"
+                      },
+                      { 
+                        title: "Luxury E-Commerce", 
+                        category: "Shopping Platform", 
+                        image: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=2070&auto=format&fit=crop"
+                      }
+                  ].map((project, idx) => (
+                      <div key={idx} className="glass-card rounded-[32px] overflow-hidden group cursor-pointer relative p-2 outline outline-1 outline-foreground/10 hover:outline-accent/50 transition-all bg-background/50">
+                         <div className="w-full h-64 md:h-80 rounded-[28px] relative overflow-hidden flex flex-col items-center justify-center">
+                            {/* Graphic Images */}
+                            <img 
+                              src={project.image} 
+                              alt={project.title} 
+                              referrerPolicy="no-referrer"
+                              className="absolute inset-0 w-full h-full object-cover object-center opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 ease-in-out mix-blend-luminosity group-hover:mix-blend-normal"
+                            />
+                            {/* Inner Overlays */}
+                            <div className="absolute inset-0 bg-background/50 group-hover:bg-transparent transition-colors duration-700 z-10 mix-blend-multiply"></div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent z-10 pointer-events-none"></div>
+                            
+                            {/* Centered Graphic Icon - Tech vibe */}
+                            <svg className="w-16 h-16 text-foreground/70 mb-4 group-hover:text-accent group-hover:-translate-y-2 relative z-20 transition-all duration-500 drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d={idx === 0 ? "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" : "M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"}></path>
+                            </svg>
+                            <span className="font-mono text-foreground uppercase tracking-widest font-black text-2xl group-hover:scale-105 relative z-20 transition-all duration-500 text-shadow-xl drop-shadow-[0_4px_10px_rgba(0,0,0,0.9)] opacity-90 group-hover:opacity-100">{project.title}</span>
+                         </div>
+                         <div className="p-6 pb-4 relative z-20">
+                             <p className="text-xs text-accent font-bold uppercase tracking-widest mb-1">{project.category}</p>
+                             <div className="flex justify-between items-center">
+                                 <h3 className="text-2xl font-black text-foreground uppercase tracking-tight">{project.title}</h3>
+                                 <div className="w-10 h-10 rounded-full bg-foreground/5 border border-foreground/10 flex items-center justify-center group-hover:bg-accent transition-colors">
+                                   <svg className="w-5 h-5 text-foreground group-hover:text-background transition-colors -rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                   </svg>
+                                 </div>
+                             </div>
+                         </div>
+                      </div>
+                  ))}
+              </div>
+              <div className="mt-12 text-center">
+                  <Link to="/portfolio" className="inline-flex items-center gap-2 px-8 py-4 glass-card text-foreground font-black tracking-widest uppercase rounded-full hover:bg-foreground hover:text-background transition-colors hover:shadow-xl">
+                      View Full Portfolio
+                  </Link>
+              </div>
+          </div>
+      </section>
+
       {/* Authentic Feedback Section */}
-      <section className="w-full py-24 relative bg-[var(--background)]/40 border-t border-foreground/5">
+      <section className="w-full py-24 relative bg-[var(--background)] border-b border-foreground/5">
          <div className="container-custom relative z-10 mb-12">
             <SectionHeader title="Entity Verification" subtitle="AUTHENTIC PAKISTANI TESTIMONIALS" />
          </div>
@@ -89,7 +180,7 @@ export default function Home() {
       </section>
 
       {/* Modern Workflow Section */}
-      <section className="py-24 bg-[var(--background)] relative overflow-hidden">
+      <section className="py-24 bg-[var(--background)]/40 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 blur-[120px] rounded-full pointer-events-none" />
         <div className="container-custom">
            <SectionHeader title="Deployment Cycle" subtitle="ENGINEERED TO PERFECTION" />
@@ -108,6 +199,28 @@ export default function Home() {
               ))}
            </div>
         </div>
+      </section>
+
+      {/* 4. Final CTA */}
+      <section className="py-32 relative border-t border-foreground/5 bg-foreground/[0.01]">
+         <div className="absolute inset-0 bg-accent/5 blur-[100px] rounded-full pointer-events-none" />
+         <div className="container-custom relative z-10 text-center">
+             <div className="glass-card md:w-3/4 mx-auto p-10 md:p-20 rounded-[3rem] border border-accent/20 shadow-[0_0_50px_rgba(0,240,255,0.05)] relative overflow-hidden">
+                 <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/10 blur-[80px] rounded-full pointer-events-none" />
+                 <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter uppercase mb-6 relative z-10">
+                     Ready to Scale <br className="hidden md:block"/> <span className="text-accent drop-shadow-[0_0_10px_rgba(0,240,255,0.4)]">Your Business?</span>
+                 </h2>
+                 <p className="text-foreground/60 max-w-xl mx-auto mb-10 md:text-lg font-medium leading-relaxed relative z-10">
+                     Let's build a high-performance digital asset that converts visitors into loyal customers. No fluff, just pure engineering.
+                 </p>
+                 <Link to="/contact" className="relative z-10 inline-flex items-center gap-3 px-8 py-5 bg-accent text-background font-black tracking-widest text-sm uppercase rounded-full hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:scale-105 transition-all duration-300">
+                     Start Your Project
+                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                     </svg>
+                 </Link>
+             </div>
+         </div>
       </section>
     </>
   );
