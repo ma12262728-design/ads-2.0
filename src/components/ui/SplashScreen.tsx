@@ -121,6 +121,25 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
         </motion.div>
       </motion.div>
       
+      {/* Professional Tech/Loading Status Footer */}
+      <motion.div
+         className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center z-20 pointer-events-none"
+         initial={{ opacity: 0, y: 10 }}
+         animate={{ opacity: 1, y: 0 }}
+         exit={{ opacity: 0, transition: { duration: 0.5 } }}
+         transition={{ duration: 1.2, delay: 2.2, ease: easeOutCube }}
+      >
+        <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-slate-900/5 backdrop-blur-md border border-slate-900/10">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+          </span>
+          <span className="text-slate-500 text-[9px] md:text-[10px] font-mono tracking-widest uppercase font-semibold">
+            Initializing Secure Workspace
+          </span>
+        </div>
+      </motion.div>
+      
     </motion.div>
   );
 }
