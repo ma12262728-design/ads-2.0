@@ -1,12 +1,12 @@
 export const BUSINESS_INFO = {
   name: "Ammar Digital Solution",
   owner: "Muhammad Ammar Shahid",
-  location: "Mandi Bahauddin, Punjab, Pakistan",
-  address: "Mandi Bahauddin, Punjab, Pakistan",
+  location: "Pakistan",
+  address: "Pakistan",
   phone: "0344 7211118",
   whatsapp: "0344 7211118",
   email: "ma12262728@gmail.com",
-  aboutBio: "Muhammad Ammar Shahid founded Ammar Digital Solution to bridge the gap between regional potential and global digital standards. With a focus on high-fidelity custom architectures, he leads Mandi Bahauddin's most innovative tech entity.",
+  aboutBio: "Muhammad Ammar Shahid founded Ammar Digital Solution to bridge the gap between regional potential and global digital standards. With a focus on high-fidelity custom architectures, he leads Pakistan's most innovative tech entity.",
   ntn: "3440312905295",
   ntnDisplay: "34403****295",
   whatsappUrl: "https://wa.me/923447211118",
@@ -28,7 +28,7 @@ export const SERVICES = [
     slug: "ecommerce-development",
     title: "E-Commerce Website Development",
     description: "Complete online stores with product management, shopping carts, and secure checkouts.",
-    detailedDescription: "Sell globally from Mandi Bahauddin. We build robust e-commerce platforms that handle thousands of products and secure payments seamlessly. From inventory management to user-friendly checkout flows, we cover everything.",
+    detailedDescription: "Sell globally from Pakistan. We build robust e-commerce platforms that handle thousands of products and secure payments seamlessly. From inventory management to user-friendly checkout flows, we cover everything.",
     benefits: ["Inventory management", "User-friendly dashboard", "Secure cart system", "Multi-currency support"],
     features: ["Dynamic Product Filtering", "Wishlist & User Accounts", "Automated Email Invoicing", "Sales Analytics Dashboard"],
     icon: "ShoppingCart",
@@ -118,7 +118,7 @@ export const PORTFOLIO = [
     delivered: "January 2026",
     tech: "Next.js, Tailwind",
     image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=75",
-    detailedDescription: "A clean and modern property portal for one of Mandi Bahauddin's leading real estate agencies.",
+    detailedDescription: "A clean and modern property portal for one of Pakistan's leading real estate agencies.",
     challenge: "Handling large galleries of property photos while maintaining SEO performance.",
     solution: "Utilized Static Site Generation (SSG) with dynamic revalidation for real-time listings.",
   },
@@ -163,7 +163,7 @@ export const TESTIMONIALS = [
     name: "Rizwan Akram",
     role: "Proprietor, Rizwan Traders",
     company: "Rizwan Traders",
-    review: "Ammar Digital ne humari wholesale inventory ko E-Commerce backend ke sath connect kar diya. Ab stock tally karna pehle se 10x asaan hai. Highly professional IT services in Mandi Bahauddin."
+    review: "Ammar Digital ne humari wholesale inventory ko E-Commerce backend ke sath connect kar diya. Ab stock tally karna pehle se 10x asaan hai. Highly professional IT services in Pakistan."
   },
   {
     name: "Sheikh Umer",

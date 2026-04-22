@@ -1,13 +1,39 @@
+import { useState } from 'react';
 import { CinematicHero } from '../components/ui/motion-hero';
 import { TESTIMONIALS, BUSINESS_INFO } from '../constants/data';
 import SectionHeader from '../components/SectionHeader';
 import { useADSConfig } from '../hooks/useADSConfig';
+import { useSEO } from '../hooks/useSEO';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
+import { ChevronDown } from 'lucide-react';
+
+const FAQS = [
+  {
+    question: "Do you provide maintenance after the website is built?",
+    answer: "Yes, absolutely! We provide 3 months of free technical support and bug fixing post-launch. Afterward, we offer affordable maintenance plans that cover server health, security updates, and content management."
+  },
+  {
+    question: "What are your payment terms?",
+    answer: "Our standard terms require a 50% advance payment before the project begins, and the remaining 50% is due upon final testing and going live."
+  },
+  {
+    question: "How long does it take to build a website?",
+    answer: "Every project is unique. A standard business website typically takes 1-2 weeks, while complex e-commerce platforms or custom web applications may take 3-6 weeks to deploy."
+  },
+  {
+    question: "Are your websites optimized for Google ranking?",
+    answer: "100%. All our architectures are built strictly following technical SEO guidelines (Google PageSpeed, Core Web Vitals) to ensure your business ranks high in organic search results."
+  }
+];
 
 export default function Home() {
   const config = useADSConfig();
+  useSEO("Best Software Agency in Pakistan | Ammar Digital", "Pakistan's premier digital architecture firm specializing in custom web engineering, e-commerce, and high-performance applications.");
+  
   // Duplicate array directly to make a seamless infinite marquee
   const doubleTestimonials = [...TESTIMONIALS, ...TESTIMONIALS];
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
     <>
@@ -184,29 +210,99 @@ export default function Home() {
          </div>
       </section>
 
-      {/* Modern Workflow Section */}
+      {/* Modern Workflow Section (Timeline) */}
       <section className="py-24 bg-[var(--background)]/40 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 blur-[120px] rounded-full pointer-events-none" />
-        <div className="container-custom">
-           <SectionHeader title="Deployment Cycle" subtitle="ENGINEERED TO PERFECTION" />
-           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              {[
-                { step: "01", title: "Intelligence", desc: "Deep analysis of your business logic and goals." },
-                { step: "02", title: "Architecture", desc: "Structuring a high-fidelity code blueprint." },
-                { step: "03", title: "Construction", desc: "Modular dev using the latest React standards." },
-                { step: "04", title: "Launch", desc: "Zero-latency cloud deployment & monitoring." }
-              ].map((item, idx) => (
-                <div key={idx} className="glass-card p-8 rounded-3xl hover:border-accent/40 transition-all group">
-                   <div className="text-4xl font-black text-foreground/10 group-hover:text-accent/20 mb-4 transition-colors font-mono">{item.step}</div>
-                   <h4 className="text-xl font-black uppercase tracking-tight mb-2 text-foreground">{item.title}</h4>
-                   <p className="text-sm font-medium text-foreground/40 leading-relaxed uppercase opacity-80">{item.desc}</p>
-                </div>
-              ))}
+        <div className="container-custom relative z-10">
+           <SectionHeader title="Deployment Cycle" subtitle="OUR ENGINEERING PROCESS" />
+           
+           <div className="relative mt-20">
+              {/* Connecting Line */}
+              <div className="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-accent/0 via-accent/30 to-accent/0 -translate-y-1/2" />
+              
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-4 relative z-10">
+                 {[
+                   { step: "01", title: "Discovery", desc: "Understanding your brand, target audience, and business goals." },
+                   { step: "02", title: "UI/UX Design", desc: "Crafting wireframes and high-fidelity visual prototypes." },
+                   { step: "03", title: "Core Dev", desc: "Writing clean, scalable code with modern frameworks." },
+                   { step: "04", title: "Deployment", desc: "Launch, testing, and going live on secure servers." }
+                 ].map((item, idx) => (
+                   <motion.div 
+                     key={idx}
+                     initial={{ opacity: 0, y: 30 }}
+                     whileInView={{ opacity: 1, y: 0 }}
+                     viewport={{ once: true }}
+                     transition={{ duration: 0.5, delay: idx * 0.2 }}
+                     className="relative flex flex-col items-center text-center group"
+                   >
+                      <div className="w-16 h-16 rounded-2xl glass-card border border-accent/30 flex items-center justify-center text-2xl font-black text-accent mb-6 relative shadow-[0_0_20px_rgba(0,240,255,0.1)] group-hover:bg-accent group-hover:text-black transition-all duration-300 z-10 group-hover:scale-110">
+                         {item.step}
+                         <div className="absolute inset-0 bg-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      
+                      <div className="glass-card p-6 rounded-3xl group-hover:border-accent/40 transition-all w-full relative z-10 bg-[var(--background)]">
+                         <h4 className="text-lg font-black uppercase tracking-tight mb-2 text-foreground group-hover:text-accent transition-colors">{item.title}</h4>
+                         <p className="text-xs font-medium text-foreground/60 leading-relaxed uppercase">{item.desc}</p>
+                      </div>
+                      
+                      {/* Vertical line indicator for mobile */}
+                      <div className="md:hidden absolute top-16 bottom-[-3rem] left-1/2 w-px bg-gradient-to-b from-accent/30 to-transparent -translate-x-1/2 -z-10" />
+                   </motion.div>
+                 ))}
+              </div>
            </div>
         </div>
       </section>
 
-      {/* 4. Final CTA */}
+      {/* 5. FAQs Section */}
+      <section className="py-24 bg-[var(--background)] relative w-full">
+         <div className="container-custom max-w-4xl relative z-10">
+            <SectionHeader title="Knowledge Base" subtitle="FREQUENTLY ASKED QUESTIONS" />
+            
+            <div className="space-y-4">
+               {FAQS.map((faq, index) => (
+                  <motion.div 
+                     key={index}
+                     initial={{ opacity: 0, y: 10 }}
+                     whileInView={{ opacity: 1, y: 0 }}
+                     viewport={{ once: true }}
+                     transition={{ delay: index * 0.1 }}
+                     className="glass-card border border-foreground/10 rounded-2xl overflow-hidden"
+                  >
+                     <button
+                        onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                        className="w-full flex items-center justify-between p-6 md:p-8 text-left focus:outline-none hover:bg-foreground/5 transition-colors"
+                     >
+                        <span className="font-bold text-foreground md:text-lg pr-4">{faq.question}</span>
+                        <motion.div
+                           animate={{ rotate: openFaq === index ? 180 : 0 }}
+                           transition={{ duration: 0.3 }}
+                           className="shrink-0 text-accent"
+                        >
+                           <ChevronDown size={24} />
+                        </motion.div>
+                     </button>
+                     <AnimatePresence>
+                        {openFaq === index && (
+                           <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                           >
+                              <div className="px-6 md:px-8 pb-6 md:pb-8 text-foreground/70 font-medium leading-relaxed">
+                                 {faq.answer}
+                              </div>
+                           </motion.div>
+                        )}
+                     </AnimatePresence>
+                  </motion.div>
+               ))}
+            </div>
+         </div>
+      </section>
+
+      {/* Final CTA */}
       <section className="py-32 relative border-t border-foreground/5 bg-foreground/[0.01]">
          <div className="absolute inset-0 bg-accent/5 blur-[100px] rounded-full pointer-events-none" />
          <div className="container-custom relative z-10 text-center">

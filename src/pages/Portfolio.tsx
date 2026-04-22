@@ -4,8 +4,11 @@ import { PORTFOLIO } from '../constants/data';
 import SectionHeader from '../components/SectionHeader';
 import { supabase } from '../lib/supabase';
 import { RefreshCw } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 
 export default function Portfolio() {
+  useSEO("Our Portfolio - Ammar Digital", "View our collection of premium web development, software engineering, and digital transformation projects.");
+
   const [dynamicPortfolio, setDynamicPortfolio] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 

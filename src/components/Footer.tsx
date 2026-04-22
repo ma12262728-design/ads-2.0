@@ -23,7 +23,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-foreground/40 text-sm font-bold uppercase tracking-tight leading-relaxed">
-              Mandi Bahauddin's premier digital architecture firm. Specializing in high-fidelity custom web engineering and strategic digital expansion.
+              Pakistan's premier digital architecture firm. Specializing in high-fidelity custom web engineering and strategic digital expansion.
             </p>
             <div className="flex gap-4">
               {[Linkedin, Facebook, Twitter].map((Icon, i) => (
@@ -92,7 +92,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-16 border-t border-foreground/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-foreground/30">
-          <p>© {currentYear} {BUSINESS_INFO.name} Protocols. Mandi Bahauddin Division.</p>
+          <p>© {currentYear} {BUSINESS_INFO.name} Protocols. Pakistan HQ.</p>
           <div className="flex gap-12">
             <Link to="/privacy" className="hover:text-accent transition-colors">Privacy Cloud</Link>
             <Link to="/terms" className="hover:text-accent transition-colors">Service Terms</Link>

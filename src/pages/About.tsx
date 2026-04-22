@@ -3,6 +3,7 @@ import { ShieldCheck, Target, Heart, Zap, Globe, Award } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { BUSINESS_INFO } from '../constants/data';
 import { useADSConfig } from '../hooks/useADSConfig';
+import { useSEO } from '../hooks/useSEO';
 
 const ValueCard = ({ icon: Icon, title, text }: any) => (
   <div className="liquid-glass p-10 rounded-[40px] space-y-6 group hover:scale-[1.02] transition-all">
@@ -16,6 +17,8 @@ const ValueCard = ({ icon: Icon, title, text }: any) => (
 
 export default function About() {
   const config = useADSConfig();
+  useSEO("About Us - Ammar Digital", "Learn about Muhammad Ammar Shahid, founder of Pakistan's trusted tech entity. Legal FBR verified architecture firm.");
+  
   return (
     <div className="pt-48 pb-24 overflow-hidden min-h-screen">
       <div className="container-custom">
@@ -75,6 +78,33 @@ export default function About() {
           </motion.div>
         </motion.section>
 
+        {/* Founder's Message Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-40"
+        >
+          <div className="glass-card p-12 md:p-24 rounded-[40px] border border-foreground/10 relative overflow-hidden bg-gradient-to-r from-accent/5 to-transparent">
+             <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 blur-[100px] rounded-full" />
+             <div className="max-w-4xl relative z-10">
+                <div className="flex items-center gap-4 text-accent mb-8 font-black tracking-widest uppercase text-sm">
+                  <Heart size={24} /> Founder's Vision
+                </div>
+                <h3 className="text-3xl md:text-5xl font-black mb-8 leading-tight text-foreground tracking-tighter">
+                  "Building digital infrastructure isn't just about code. It's about empowering Pakistani businesses to compete on a global scale with uncompromising quality."
+                </h3>
+                <div className="mt-8 pt-8 border-t border-foreground/10 flex items-center gap-6">
+                   <div>
+                     <p className="text-xl font-black uppercase tracking-tight text-foreground">Muhammad Ammar Shahid</p>
+                     <p className="text-xs font-bold uppercase tracking-widest text-foreground/50 mt-1">Founder & Lead Architect</p>
+                   </div>
+                </div>
+             </div>
+          </div>
+        </motion.section>
+
         {/* FBR Registration Detail */}
         <motion.section
           initial={{ opacity: 0, scale: 0.95 }}
@@ -103,7 +133,7 @@ export default function About() {
               <p className="text-[10px] text-accent font-black uppercase tracking-[0.3em] mb-6">Taxpayer Identity</p>
               <p className="text-4xl md:text-5xl font-mono font-black text-primary dark:text-white mb-4 tracking-tighter">{config.ntn === BUSINESS_INFO.ntn ? BUSINESS_INFO.ntnDisplay : config.ntn}</p>
               <div className="h-px w-24 bg-accent/30 mx-auto mb-6" />
-              <p className="text-xs text-gray-500 font-bold uppercase tracking-widest">Division: Mandi Bahauddin</p>
+              <p className="text-xs text-gray-500 font-bold uppercase tracking-widest">Division: Pakistan Operations</p>
             </motion.div>
           </div>
         </motion.section>

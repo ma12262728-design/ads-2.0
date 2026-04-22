@@ -3,8 +3,11 @@ import { motion } from 'motion/react';
 import { SERVICES } from '../constants/data';
 import SectionHeader from '../components/SectionHeader';
 import * as Icons from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 
 export default function Services() {
+  useSEO("Digital Services - Ammar Digital", "Explore our premium digital services including Custom UI/UX, E-Commerce Development, API Integration, and Cloud Hosting in Pakistan.");
+
   return (
     <div className="pt-48 pb-24 min-h-screen">
       <div className="container-custom">

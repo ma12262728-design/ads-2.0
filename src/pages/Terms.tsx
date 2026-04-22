@@ -2,8 +2,11 @@ import { motion } from 'motion/react';
 import SectionHeader from '../components/SectionHeader';
 import { BUSINESS_INFO } from '../constants/data';
 import { Scale } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 
 export default function Terms() {
+  useSEO("Terms of Service - Ammar Digital", "Terms and conditions for structural engineering and web deployment services.");
+
   return (
     <div className="pt-48 pb-24 min-h-screen relative overflow-hidden">
       <div className="absolute top-0 right-[-10%] w-[50%] h-[50%] bg-accent/5 blur-[150px] rounded-full pointer-events-none z-0" />
