@@ -21,6 +21,7 @@ import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import CaseStudies from './pages/CaseStudies';
 import { supabase } from './lib/supabase';
+import SplashScreen from './components/ui/SplashScreen';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -92,6 +93,7 @@ export default function App() {
 
 function AppContent() {
   const navigate = useNavigate();
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
@@ -102,23 +104,29 @@ function AppContent() {
   }, [navigate]);
 
   return (
-    <div className="flex flex-col min-h-screen selection:bg-accent selection:text-black transition-colors duration-500 overflow-x-hidden relative">
-      <ScrollToTop />
-      {/* Persistent High-Tech Background Elements */}
-      <div className="fixed inset-0 pointer-events-none -z-10 bg-[var(--background)]">
-        <div className="absolute top-[-10%] left-[-10%] w-[80%] h-[80%] bg-accent/10 blur-[150px] rounded-full animate-pulse opacity-60 dark:opacity-60" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] bg-secondary/10 blur-[150px] rounded-full animate-pulse delay-1000 opacity-50 dark:opacity-50" />
-        <div className="absolute top-[40%] left-[60%] w-[50%] h-[50%] bg-accent/5 blur-[100px] rounded-full tech-glow opacity-30 dark:opacity-30" />
-      </div>
-
-      <Navbar />
+    <>
+      <AnimatePresence mode="wait">
+        {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
+      </AnimatePresence>
       
-      <main className="flex-grow z-10 relative pb-20">
-        <AnimatedRoutes />
-      </main>
+      <div className={`flex flex-col min-h-screen selection:bg-accent selection:text-black transition-colors duration-500 overflow-x-hidden relative ${showSplash ? 'h-screen overflow-hidden' : ''}`}>
+        <ScrollToTop />
+        {/* Persistent High-Tech Background Elements */}
+        <div className="fixed inset-0 pointer-events-none -z-10 bg-[var(--background)]">
+          <div className="absolute top-[-10%] left-[-10%] w-[80%] h-[80%] bg-accent/10 blur-[150px] rounded-full animate-pulse opacity-60 dark:opacity-60" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] bg-secondary/10 blur-[150px] rounded-full animate-pulse delay-1000 opacity-50 dark:opacity-50" />
+          <div className="absolute top-[40%] left-[60%] w-[50%] h-[50%] bg-accent/5 blur-[100px] rounded-full tech-glow opacity-30 dark:opacity-30" />
+        </div>
 
-      <Footer />
-      <WhatsAppButton />
-    </div>
+        <Navbar />
+        
+        <main className="flex-grow z-10 relative pb-20">
+          <AnimatedRoutes />
+        </main>
+
+        <Footer />
+        <WhatsAppButton />
+      </div>
+    </>
   );
 }
