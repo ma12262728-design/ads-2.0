@@ -94,8 +94,8 @@ export default function Footer() {
         <div className="pt-16 border-t border-foreground/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-foreground/30">
           <p>© {currentYear} {BUSINESS_INFO.name} Protocols. Mandi Bahauddin Division.</p>
           <div className="flex gap-12">
-            <Link to="#" className="hover:text-accent transition-colors">Privacy Cloud</Link>
-            <Link to="#" className="hover:text-accent transition-colors">Service Terms</Link>
+            <Link to="/privacy" className="hover:text-accent transition-colors">Privacy Cloud</Link>
+            <Link to="/terms" className="hover:text-accent transition-colors">Service Terms</Link>
           </div>
         </div>
       </div>

@@ -160,43 +160,51 @@ export const PORTFOLIO = [
 
 export const TESTIMONIALS = [
   {
-    name: "Ahmed Raza",
-    role: "CEO, TechFlow",
-    review: "Ammar Digital completely transformed our online storefront. The zero-latency architecture and deep understanding of UI/UX is truly world-class. Highly recommended for elite projects."
+    name: "Rizwan Akram",
+    role: "Proprietor, Rizwan Traders",
+    company: "Rizwan Traders",
+    review: "Ammar Digital ne humari wholesale inventory ko E-Commerce backend ke sath connect kar diya. Ab stock tally karna pehle se 10x asaan hai. Highly professional IT services in Mandi Bahauddin."
   },
   {
-    name: "Fatima Ali",
-    role: "Operations Head, Global Mart",
-    review: "We needed a robust e-commerce platform that could handle thousands of concurrent users. They delivered a masterpiece. The backend API integrations are seamless."
+    name: "Sheikh Umer",
+    role: "CEO, UrbanWear PK",
+    company: "UrbanWear PK",
+    review: "In ki E-Commerce website speed kamal hai. Pura custom design kiya gaya hai or meri sales mein 40% izafa hua hai fast loading times ki waja se. Ek authentic Pakistani software agency."
   },
   {
-    name: "Usman Tariq",
-    role: "Creative Director, Vibe Studio",
-    review: "The portfolio site they designed for my agency is breathtaking. The liquid-glass aesthetic and smooth animations make it stand out instantly."
+    name: "Waqas Tariq",
+    role: "Managing Director, Tariq Real Estates",
+    company: "Tariq Real Estates",
+    review: "Ammar and his team built our property listing portal exactly how we envisioned. FBR certified aur bilkul on-time delivery. Best tech team to work with for real estate."
+  },
+  {
+    name: "Dr. Ayesha Noor",
+    role: "Head Administrator, Noor Clinics",
+    company: "Noor Clinics",
+    review: "Data security and API integrations were my biggest concerns for our clinic's management dashboard. Ammar Digital provided a zero-latency, secure infrastructure."
+  },
+  {
+    name: "Ch. Saad Gujjar",
+    role: "Operations Manager, Gujjar Logistics",
+    company: "Gujjar Logistics",
+    review: "We needed a robust fleet reporting system. Ye team actual architecture build karni janti hai. Responsive design banaya aur 2 hafte pehle hi go-live karwa diya."
+  },
+  {
+    name: "Zainab Riaz",
+    role: "Founder, Zenith Beauty",
+    company: "Zenith Beauty",
+    review: "My Shopify store was completely revamped by Ammar. The 'Apple-style' liquid glass design he implemented gave my brand a massively premium feel. Excellent work!"
+  },
+  {
+    name: "Nabeel Chaudhry",
+    role: "Director, Chaudhry Associates",
+    company: "Chaudhry Associates",
+    review: "Bhai ne website k database optimization aesi ki hai ke website kabhi crash nahi hoti. FBR NTN verified hain, so payment transactions mein we had complete trust."
   },
   {
     name: "Hassan Dawood",
-    role: "Marketing Strategist, Apex Ads",
-    review: "Professionalism at its peak. FBR certified and deeply knowledgeable about modern web standards. Our conversion rates have skyrocketed since the redesign."
-  },
-  {
-    name: "Bilal Mehmood",
-    role: "CTO, Nebula Cloud",
-    review: "From cloud deployment to flawless database architecture, their IT consultancy saved us months of trial and error. A truly stellar tech partner."
-  },
-  {
-    name: "Sana Javed",
-    role: "Founder, StylePK",
-    review: "Bhai ka kaam lajawab hai! Website itni fast load hoti hai ke trust nahi hota. Ecommerce system bilkul smoothly work kar raha hai."
-  },
-  {
-    name: "Hamza Shafiq",
-    role: "Manager, Tariq Estate",
-    review: "Bohot professional service. FBR registered hain isliye trust karna asaan tha, aur theek time par project deliver kiya with premium design."
-  },
-  {
-    name: "Kashif Ali",
-    role: "Owner, Local Eats",
-    review: "Animations aur design ka koi muqabla nahi. Contact form se le kar checkout tak sab kuch perfect set kiya hua hai. Best developer in Mandi Bahauddin!"
+    role: "Marketing Head, Elite Marketing",
+    company: "Elite Marketing",
+    review: "Google Ads conversions scale with site speed. Ammar Digital's custom React setup got us a 99 PageSpeed score, drastically reducing our CPC. Highly recommended."
   }
 ];

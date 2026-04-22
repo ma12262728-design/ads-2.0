@@ -37,19 +37,27 @@ export default function Contact() {
         throw new Error("Invalid phone number format.");
       }
 
-      const { error } = await supabase.from('project_inquiries').insert([
-        {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-          created_at: new Date().toISOString()
-        }
-      ]);
-            
-      if (error) throw error;
+      // Using FormSubmit AJAX API to directly email the owner without backend config
+      const response = await fetch(`https://formsubmit.co/ajax/${BUSINESS_INFO.email}`, {
+        method: "POST",
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            message: formData.message,
+            _subject: `New Lead from Ammar Digital: ${formData.name}`,
+            _template: 'box'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to transmit message. Please contact directly via WhatsApp.");
+      }
       
-      await sendNotificationEmail(formData);
       setStatus('success');
       setFormData({ name: '', email: '', phone: '', message: '' });
     } catch (err: any) {

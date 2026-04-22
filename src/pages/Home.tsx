@@ -167,10 +167,15 @@ export default function Home() {
                   <div className="mt-auto border-t border-foreground/10 pt-4 flex items-center justify-between">
                     <div>
                       <h5 className="text-foreground font-black uppercase text-xs tracking-wider">{testimonial.name}</h5>
-                      <p className="text-[10px] text-accent uppercase font-bold tracking-widest">{testimonial.role}</p>
+                      <p className="text-[10px] text-accent uppercase font-bold tracking-widest leading-tight">
+                        {testimonial.role}
+                      </p>
                     </div>
-                    <div className="w-8 h-8 rounded-full bg-foreground/10 border border-foreground/20 flex items-center justify-center text-[10px] font-black text-foreground mix-blend-overlay">
-                      PK
+                    <div className="flex flex-col items-end gap-1">
+                      <div className="w-8 h-8 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-[10px] font-black text-accent shadow-[0_0_10px_rgba(0,240,255,0.2)]">
+                        PK
+                      </div>
+                      <span className="text-[8px] uppercase tracking-widest font-bold opacity-40">Verified</span>
                     </div>
                   </div>
                 </div>

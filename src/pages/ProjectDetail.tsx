@@ -55,7 +55,7 @@ export default function ProjectDetail() {
 
         <SectionHeader title={project.title} subtitle={`CLIENT: ${project.client}`} centered={false} />
 
-        <div className="rounded-[40px] overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] mb-16 relative group">
+        <div className="rounded-[40px] overflow-hidden border border-foreground/10 shadow-[0_0_50px_rgba(0,0,0,0.05)] dark:shadow-[0_0_50px_rgba(0,0,0,0.5)] mb-16 relative group">
            <img src={project.image} alt={project.title} className="w-full aspect-video object-cover" referrerPolicy="no-referrer" />
            <div className="absolute inset-0 border border-accent/20 rounded-[40px] pointer-events-none" />
         </div>
@@ -63,36 +63,36 @@ export default function ProjectDetail() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="md:col-span-2 space-y-12">
              <div>
-                <h4 className="text-sm font-black uppercase tracking-[0.3em] text-white opacity-40 mb-4">Architecture Synopsis</h4>
-                <p className="text-gray-300 font-medium leading-relaxed">{project.detailedDescription}</p>
+                <h4 className="text-sm font-black uppercase tracking-[0.3em] text-foreground opacity-60 dark:opacity-40 mb-4">Architecture Synopsis</h4>
+                <p className="text-foreground/80 dark:text-gray-300 font-medium leading-relaxed">{project.detailedDescription}</p>
              </div>
              
-             <div className="p-8 bg-white/5 border border-white/10 rounded-3xl relative overflow-hidden">
+             <div className="p-8 bg-foreground/5 border border-foreground/10 rounded-3xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/10 blur-2xl rounded-full" />
-                <h4 className="text-sm font-black uppercase tracking-[0.3em] text-white opacity-40 mb-4 relative z-10">The Challenge</h4>
-                <p className="text-gray-300 font-medium leading-relaxed relative z-10">{project.challenge}</p>
+                <h4 className="text-sm font-black uppercase tracking-[0.3em] text-foreground opacity-60 dark:opacity-40 mb-4 relative z-10">The Challenge</h4>
+                <p className="text-foreground/80 dark:text-gray-300 font-medium leading-relaxed relative z-10">{project.challenge}</p>
              </div>
 
              <div className="p-8 bg-accent/5 border border-accent/20 rounded-3xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 blur-2xl rounded-full" />
                 <h4 className="text-sm font-black uppercase tracking-[0.3em] text-accent mb-4 relative z-10">The Solution</h4>
-                <p className="text-gray-300 font-medium leading-relaxed relative z-10">{project.solution}</p>
+                <p className="text-foreground/80 dark:text-gray-300 font-medium leading-relaxed relative z-10">{project.solution}</p>
              </div>
           </div>
 
           <div className="space-y-6">
-            <div className="liquid-glass p-8 rounded-3xl border border-white/10 space-y-6">
+            <div className="glass-card p-8 rounded-3xl border border-foreground/10 space-y-6">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 mb-1">Entity</p>
-                <p className="font-bold text-white uppercase tracking-tight">{project.client}</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-50 dark:opacity-40 mb-1">Entity</p>
+                <p className="font-bold text-foreground uppercase tracking-tight">{project.client}</p>
               </div>
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 mb-1">Stack</p>
-                <p className="font-bold text-white uppercase tracking-tight">{project.tech}</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-50 dark:opacity-40 mb-1">Stack</p>
+                <p className="font-bold text-foreground uppercase tracking-tight">{project.tech}</p>
               </div>
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 mb-1">Deployed</p>
-                <p className="font-bold text-white uppercase tracking-tight">{project.delivered}</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-50 dark:opacity-40 mb-1">Deployed</p>
+                <p className="font-bold text-foreground uppercase tracking-tight">{project.delivered}</p>
               </div>
             </div>
             

@@ -20,6 +20,8 @@ import Invoice from './pages/Invoice';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import CaseStudies from './pages/CaseStudies';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 import { supabase } from './lib/supabase';
 import SplashScreen from './components/ui/SplashScreen';
 
@@ -74,6 +76,8 @@ function AnimatedRoutes() {
           <Route path="/invoice/:id" element={<Invoice />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
       </motion.div>
     </AnimatePresence>
