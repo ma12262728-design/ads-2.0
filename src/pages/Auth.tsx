@@ -4,9 +4,11 @@ import { motion } from 'motion/react';
 import { Lock, Mail, Key, ShieldCheck, AlertCircle, User, Briefcase, Phone } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import SectionHeader from '../components/SectionHeader';
+import { useSEO } from '../hooks/useSEO';
 
 export default function Auth() {
   const navigate = useNavigate();
+  useSEO("Authentication Server - Ammar Digital", "Secure login portal.", "website", "https://ammardigital.shop/og-image.jpg", undefined, true);
   const [searchParams] = useSearchParams();
   const [isSignIn, setIsSignIn] = useState(searchParams.get('mode') !== 'signup');
   const [email, setEmail] = useState('');

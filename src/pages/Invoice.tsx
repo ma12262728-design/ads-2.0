@@ -4,9 +4,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import { supabase } from '../lib/supabase';
 import { BUSINESS_INFO } from '../constants/data';
 import { ArrowLeft, Printer } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 
 export default function Invoice() {
   const { id } = useParams();
+  useSEO("View Invoice - Ammar Digital", "Secure Invoice Server", "website", "https://ammardigital.shop/og-image.jpg", undefined, true);
   const [order, setOrder] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [errorMSG, setErrorMSG] = useState<string | null>(null);

@@ -4,9 +4,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import { LogOut, LayoutDashboard, Database, RefreshCw, Clock, CheckCircle2, CircleDot, ChevronDown, Plus, X, FileText, LayoutTemplate, Settings2 } from 'lucide-react';
 import { supabase, supabaseUrl } from '../lib/supabase';
 import { BUSINESS_INFO } from '../constants/data';
+import { useSEO } from '../hooks/useSEO';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
+  useSEO("Admin Server - Ammar Digital", "Secure architecture backend.", "website", "https://ammardigital.shop/og-image.jpg", undefined, true);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [orders, setOrders] = useState<any[]>([]);
   const [inquiries, setInquiries] = useState<any[]>([]);

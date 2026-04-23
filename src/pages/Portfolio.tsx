@@ -68,6 +68,7 @@ export default function Portfolio() {
                 src={project.image} 
                 className="w-full aspect-[4/3] object-cover transform group-hover:scale-105 transition-transform duration-700 blur-[2px] group-hover:blur-0" 
                 alt={project.title} 
+                loading="lazy"
                 referrerPolicy="no-referrer"
               />
               

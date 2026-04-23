@@ -26,10 +26,15 @@ export default function Footer() {
               Pakistan's premier digital architecture firm. Specializing in high-fidelity custom web engineering and strategic digital expansion.
             </p>
             <div className="flex gap-4">
-              {[Linkedin, Facebook, Twitter].map((Icon, i) => (
+              {[
+                { Icon: Linkedin, label: 'LinkedIn' }, 
+                { Icon: Facebook, label: 'Facebook' }, 
+                { Icon: Twitter, label: 'Twitter' }
+              ].map(({ Icon, label }, i) => (
                 <a
                   key={i}
                   href="#"
+                  aria-label={label}
                   className="w-12 h-12 rounded-xl bg-foreground/5 border border-foreground/10 flex items-center justify-center hover:bg-accent hover:text-black hover:border-accent transition-all duration-300 shadow-xl text-foreground"
                 >
                   <Icon size={20} />

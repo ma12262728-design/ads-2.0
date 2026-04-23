@@ -11,8 +11,8 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
   }, [onComplete]);
 
   // Premium Apple-style easing curves
-  const easeOutCube = [0.215, 0.61, 0.355, 1];
-  const easeInOutCubic = [0.645, 0.045, 0.355, 1];
+  const easeOutCube = [0.215, 0.61, 0.355, 1] as const;
+  const easeInOutCubic = [0.645, 0.045, 0.355, 1] as const;
 
   return (
     <motion.div

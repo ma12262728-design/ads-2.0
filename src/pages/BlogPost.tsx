@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { ArrowLeft, Calendar, User, Tag, Share2, Clock } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { supabase } from '../lib/supabase';
+import { useSEO } from '../hooks/useSEO';
 
 interface BlogPost {
   id: string;
@@ -45,6 +46,25 @@ export default function BlogPost() {
       setLoading(false);
     }
   };
+
+  useSEO(
+    post ? `${post.title} - Ammar Digital Blog` : "Loading Post...",
+    post ? post.excerpt : "Read our latest technical insights.",
+    "article",
+    post?.image_url || "https://ammardigital.shop/og-image.jpg",
+    post ? {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": post.title,
+      "image": post.image_url,
+      "datePublished": new Date(post.created_at).toISOString(),
+      "author": [{
+          "@type": "Person",
+          "name": post.author,
+          "url": "https://ammardigital.shop/about"
+        }]
+    } : undefined
+  );
 
   const handleShare = () => {
     if (navigator.share) {

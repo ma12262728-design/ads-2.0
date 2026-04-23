@@ -1,31 +1,74 @@
 import { useEffect } from 'react';
 
-export function useSEO(title: string, description: string) {
+export function useSEO(
+  title: string, 
+  description: string, 
+  type: string = 'website',
+  image: string = 'https://ammardigital.shop/og-image.jpg',
+  schema?: Record<string, any>,
+  noindex?: boolean
+) {
   useEffect(() => {
     // Update title
     document.title = title;
 
-    // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', description);
+    // Helper to update or create meta tags
+    const setMetaTag = (attrName: string, attrValue: string, content: string) => {
+      let element = document.querySelector(`meta[${attrName}="${attrValue}"]`);
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attrName, attrValue);
+        document.head.appendChild(element);
+      }
+      element.setAttribute('content', content);
+    };
+
+    setMetaTag('name', 'description', description);
+
+    // Indexing Control
+    if (noindex) {
+      setMetaTag('name', 'robots', 'noindex, nofollow');
     } else {
-      const meta = document.createElement('meta');
-      meta.name = 'description';
-      meta.content = description;
-      document.head.appendChild(meta);
+      setMetaTag('name', 'robots', 'index, follow');
     }
 
-    // Update Open Graph tags for better social sharing
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle) {
-      ogTitle.setAttribute('content', title);
+    // Open Graph
+    setMetaTag('property', 'og:title', title);
+    setMetaTag('property', 'og:description', description);
+    setMetaTag('property', 'og:type', type);
+    setMetaTag('property', 'og:image', image);
+    setMetaTag('property', 'og:url', window.location.href);
+
+    // Twitter Card
+    setMetaTag('name', 'twitter:card', 'summary_large_image');
+    setMetaTag('name', 'twitter:title', title);
+    setMetaTag('name', 'twitter:description', description);
+    setMetaTag('name', 'twitter:image', image);
+
+    // Update canonical link
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      canonical.id = 'canonical-link';
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', window.location.href);
+
+    // Schema.org Structured Data
+    if (schema) {
+      let script = document.querySelector('#schema-org-jsonld');
+      if (!script) {
+        script = document.createElement('script');
+        script.id = 'schema-org-jsonld';
+        script.setAttribute('type', 'application/ld+json');
+        document.head.appendChild(script);
+      }
+      script.textContent = JSON.stringify(schema);
+    } else {
+      const script = document.querySelector('#schema-org-jsonld');
+      if (script) script.remove();
     }
 
-    const ogDesc = document.querySelector('meta[property="og:description"]');
-    if (ogDesc) {
-      ogDesc.setAttribute('content', description);
-    }
-
-  }, [title, description]);
+  }, [title, description, type, image, schema, noindex]);
 }

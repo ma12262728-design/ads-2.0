@@ -17,7 +17,23 @@ const ValueCard = ({ icon: Icon, title, text }: any) => (
 
 export default function About() {
   const config = useADSConfig();
-  useSEO("About Us - Ammar Digital", "Learn about Muhammad Ammar Shahid, founder of Pakistan's trusted tech entity. Legal FBR verified architecture firm.");
+  useSEO(
+    "About Us - Ammar Digital", 
+    "Learn about Muhammad Ammar Shahid, founder of Pakistan's trusted tech entity. Legal FBR verified architecture firm.",
+    "profile",
+    "https://ammardigital.shop/og-image.jpg",
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Muhammad Ammar Shahid",
+      "jobTitle": "Lead Architect",
+      "url": "https://ammardigital.shop/about",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Ammar Digital Solution"
+      }
+    }
+  );
   
   return (
     <div className="pt-48 pb-24 overflow-hidden min-h-screen">

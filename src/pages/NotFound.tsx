@@ -4,7 +4,7 @@ import { ShieldAlert, ArrowLeft } from 'lucide-react';
 import { useSEO } from '../hooks/useSEO';
 
 export default function NotFound() {
-  useSEO("Page Not Found - Ammar Digital", "The protocol you requested is offline or does not exist.");
+  useSEO("Page Not Found - Ammar Digital", "The protocol you requested is offline or does not exist.", "website", "https://ammardigital.shop/og-image.jpg", undefined, true);
 
   return (
     <div className="min-h-screen pt-32 pb-24 flex items-center justify-center relative overflow-hidden bg-[var(--background)]">

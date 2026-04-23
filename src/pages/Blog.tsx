@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Calendar, User, ArrowRight, Search, Tag } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { supabase } from '../lib/supabase';
+import { useSEO } from '../hooks/useSEO';
 
 interface BlogPost {
   id: string;
@@ -18,6 +19,13 @@ interface BlogPost {
 }
 
 export default function Blog() {
+  useSEO(
+    "Engineering Insights & Blog - Ammar Digital", 
+    "Latest technical insights, software engineering updates, and digital marketing strategies from Ammar Digital.",
+    "blog",
+    "https://ammardigital.shop/og-image.jpg"
+  );
+  
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');

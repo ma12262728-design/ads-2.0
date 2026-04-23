@@ -29,7 +29,44 @@ const FAQS = [
 
 export default function Home() {
   const config = useADSConfig();
-  useSEO("Best Software Agency in Pakistan | Ammar Digital", "Pakistan's premier digital architecture firm specializing in custom web engineering, e-commerce, and high-performance applications.");
+  useSEO(
+    "Best Software Agency in Pakistan | Ammar Digital", 
+    "Pakistan's premier digital architecture firm specializing in custom web engineering, e-commerce, and high-performance applications.",
+    "website",
+    "https://ammardigital.shop/og-image.jpg",
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Ammar Digital Solution",
+      "operatingSystem": "All",
+      "applicationCategory": "WebApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "PKR"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "153"
+      },
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Ammar Digital Solution",
+        "image": "https://ammardigital.shop/og-image.jpg",
+        "id": "https://ammardigital.shop/",
+        "url": "https://ammardigital.shop/",
+        "telephone": "+923055963959",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Islamabad",
+          "addressRegion": "Islamabad Capital Territory",
+          "addressCountry": "PK"
+        }
+      }
+    }
+  );
   
   // Duplicate array directly to make a seamless infinite marquee
   const doubleTestimonials = [...TESTIMONIALS, ...TESTIMONIALS];
@@ -135,6 +172,7 @@ export default function Home() {
                               src={project.image} 
                               alt={project.title} 
                               referrerPolicy="no-referrer"
+                              loading="lazy"
                               className="absolute inset-0 w-full h-full object-cover object-center opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 ease-in-out mix-blend-luminosity group-hover:mix-blend-normal"
                             />
                             {/* Inner Overlays */}
