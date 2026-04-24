@@ -3,10 +3,10 @@ import { useEffect } from 'react';
 
 export default function SplashScreen({ onComplete }: { onComplete: () => void }) {
   useEffect(() => {
-    // Extended to 4.5 seconds for a majestic entrance, holding period, and graceful exit
+    // Extended to 2.5 seconds for a majestic entrance, holding period, and graceful exit
     const timer = setTimeout(() => {
       onComplete();
-    }, 4500);
+    }, 2500);
     return () => clearTimeout(timer);
   }, [onComplete]);
 

@@ -6,35 +6,90 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any" />
-    <link rel="apple-touch-icon" href="/favicon.svg">
-    <meta name="description" content="Pakistan's premier digital architecture firm specializing in custom web engineering, e-commerce, and high-performance software applications.">
+    
+    <!-- Extreme Favicon Setup for Google Search Console -->
+    <link rel="icon" type="image/svg+xml" href="https://ammardigital.shop/favicon.svg" sizes="any" />
+    <link rel="apple-touch-icon" href="https://ammardigital.shop/favicon.svg">
+    <link rel="shortcut icon" href="https://ammardigital.shop/favicon.svg" />
+    
+    <!-- Site Name Overrides for Google Search Results -->
+    <meta name="application-name" content="Ammar Digital">
+    <meta name="apple-mobile-web-app-title" content="Ammar Digital">
+    <meta property="og:site_name" content="Ammar Digital">
+    <title>Ammar Digital | Best Software Agency in Pakistan</title>
+
+    <meta name="description" content="Ammar Digital is Pakistan's premier digital architecture firm specializing in custom web engineering, e-commerce, and high-performance software applications.">
     <meta name="keywords" content="digital solutions, software development, ammar digital solution, e-commerce, web development, custom software, best software agency in pakistan">
+    
     <meta property="og:title" content="Ammar Digital | Best Software Agency in Pakistan">
     <meta property="og:description" content="Pakistan's premier digital architecture firm specializing in custom web engineering, e-commerce, and high-performance software applications.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ammardigital.shop/">
     <meta property="og:image" content="https://ammardigital.shop/og-image.jpg">
+    <meta name="image" content="https://ammardigital.shop/og-image.jpg">
+    
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Ammar Digital | Best Software Agency in Pakistan">
     <meta name="twitter:description" content="Pakistan's premier digital architecture firm specializing in custom web engineering, e-commerce, and high-performance software applications.">
     <meta name="twitter:image" content="https://ammardigital.shop/og-image.jpg">
+    
     <meta name="theme-color" content="#000000">
-    <meta name="robots" content="index, follow">
+    <!-- Advanced crawler directives to maximize feature snippets -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="canonical" href="https://ammardigital.shop/" id="canonical-link">
-    <title>Ammar Digital | Best Software Agency in Pakistan</title>
+    
+    <!-- Unified Extreme Graph Schema -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Ammar Digital Solution",
-      "alternateName": ["Ammar Digital", "ADS Pakistan"],
-      "url": "https://ammardigital.shop/"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://ammardigital.shop/#website",
+          "url": "https://ammardigital.shop/",
+          "name": "Ammar Digital",
+          "alternateName": ["Ammar Digital Solution", "ADS Pakistan"],
+          "description": "Best Software Agency in Pakistan",
+          "inLanguage": "en-US"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://ammardigital.shop/#organization",
+          "name": "Ammar Digital",
+          "url": "https://ammardigital.shop/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://ammardigital.shop/favicon.svg"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+923055963959",
+            "contactType": "customer service"
+          }
+        }
+      ]
     }
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- 
+      EXTREME SEO HACK: 
+      Googlebot "Pass 1" will read this static HTML instantly before React even loads. 
+      Once React loads, it overwrites this div automatically.
+    -->
+    <div id="root">
+      <div style="font-family: sans-serif; padding: 2rem; color: #111; background: #000; min-height: 100vh;">
+         <h1 style="color: #fff;">Ammar Digital | Best Software Agency in Pakistan</h1>
+         <p style="color: #ccc;">Ammar Digital Solution is Pakistan's premier software engineering and web development firm. We build zero-latency custom web architectures, scalable e-commerce platforms, and perform robust digital transformations.</p>
+         <nav style="margin-top: 1rem;">
+            <a href="https://ammardigital.shop/about" style="color: #0ff; margin-right: 1rem;">About Us</a>
+            <a href="https://ammardigital.shop/services" style="color: #0ff; margin-right: 1rem;">Our Services</a>
+            <a href="https://ammardigital.shop/portfolio" style="color: #0ff; margin-right: 1rem;">Portfolio</a>
+            <a href="https://ammardigital.shop/blog" style="color: #0ff; margin-right: 1rem;">Blog</a>
+            <a href="https://ammardigital.shop/contact" style="color: #0ff;">Contact</a>
+         </nav>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
