@@ -116,7 +116,7 @@ export default function TemplatesPack() {
           <SectionHeader 
             title="The Template Arsenal" 
             subtitle="15 unique architectures designed for specific industries and use cases." 
-            align="center"
+            centered={true}
           />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
