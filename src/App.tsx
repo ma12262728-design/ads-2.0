@@ -1,36 +1,39 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, ReactNode, useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
-import { ThemeProvider } from 'next-themes';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import WhatsAppButton from './components/WhatsAppButton';
-import Home from './pages/Home';
-import About from './pages/About';
-import Services from './pages/Services';
-import ServiceDetail from './pages/ServiceDetail';
-import Portfolio from './pages/Portfolio';
-import ProjectDetail from './pages/ProjectDetail';
-import Contact from './pages/Contact';
-import Order from './pages/Order';
-import Auth from './pages/Auth';
-import AdminDashboard from './pages/AdminDashboard';
-import ClientDashboard from './pages/ClientDashboard';
-import Invoice from './pages/Invoice';
-import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
-import CaseStudies from './pages/CaseStudies';
-import Privacy from './pages/Privacy';
-import Terms from './pages/Terms';
-import NotFound from './pages/NotFound';
-import { supabase } from './lib/supabase';
-import SplashScreen from './components/ui/SplashScreen';
-import { CartProvider } from './context/CartContext';
-import CartDrawer from './components/ui/CartDrawer';
-import { Toaster } from 'sonner';
-
-import { TemplateViewer } from './components/TemplateViewer';
-import TemplatesPack from './pages/TemplatesPack';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import { useEffect, ReactNode, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { ThemeProvider } from "next-themes";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import WhatsAppButton from "./components/WhatsAppButton";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import ServiceDetail from "./pages/ServiceDetail";
+import Portfolio from "./pages/Portfolio";
+import ProjectDetail from "./pages/ProjectDetail";
+import Contact from "./pages/Contact";
+import Order from "./pages/Order";
+import Auth from "./pages/Auth";
+import AdminDashboard from "./pages/AdminDashboard";
+import ClientDashboard from "./pages/ClientDashboard";
+import Invoice from "./pages/Invoice";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import CaseStudies from "./pages/CaseStudies";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import NotFound from "./pages/NotFound";
+import { supabase } from "./lib/supabase";
+import SplashScreen from "./components/ui/SplashScreen";
+import { CartProvider } from "./context/CartContext";
+import CartDrawer from "./components/ui/CartDrawer";
+import { Toaster } from "sonner";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -46,9 +49,9 @@ const PageTransition = ({ children }: { children: ReactNode }) => {
     <AnimatePresence mode="wait">
       <motion.div
         key={location.pathname}
-        initial={{ opacity: 0, y: 10, filter: 'blur(10px)' }}
-        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-        exit={{ opacity: 0, y: -10, filter: 'blur(10px)' }}
+        initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        exit={{ opacity: 0, y: -10, filter: "blur(10px)" }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       >
         {children}
@@ -63,9 +66,9 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <motion.div
         key={location.pathname}
-        initial={{ opacity: 0, scale: 0.98, filter: 'blur(10px)' }}
-        animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-        exit={{ opacity: 0, scale: 1.02, filter: 'blur(10px)' }}
+        initial={{ opacity: 0, scale: 0.98, filter: "blur(10px)" }}
+        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+        exit={{ opacity: 0, scale: 1.02, filter: "blur(10px)" }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
         <Routes location={location}>
@@ -85,9 +88,6 @@ function AnimatedRoutes() {
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
-          
-          <Route path="/templates" element={<TemplatesPack />} />
-          <Route path="/templates/view" element={<TemplateViewer />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -116,31 +116,28 @@ function AppContent() {
   const location = useLocation();
   const [showSplash, setShowSplash] = useState(true);
 
-  const isTemplateViewerRoute = location.pathname.startsWith('/templates/view');
-
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log(`Auth System: Global State Change [${event}]`, session?.user?.email || 'No Active Session');
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log(
+        `Auth System: Global State Change [${event}]`,
+        session?.user?.email || "No Active Session",
+      );
     });
 
     return () => subscription.unsubscribe();
   }, [navigate]);
-
-  if (isTemplateViewerRoute) {
-    return (
-      <div className="min-h-screen selection:bg-accent selection:text-black">
-        <AnimatedRoutes />
-      </div>
-    );
-  }
 
   return (
     <>
       <AnimatePresence mode="wait">
         {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
       </AnimatePresence>
-      
-      <div className={`flex flex-col min-h-screen selection:bg-accent selection:text-black transition-colors duration-500 overflow-x-hidden relative ${showSplash ? 'h-screen overflow-hidden' : ''}`}>
+
+      <div
+        className={`flex flex-col min-h-screen selection:bg-accent selection:text-black transition-colors duration-500 overflow-x-hidden relative ${showSplash ? "h-screen overflow-hidden" : ""}`}
+      >
         <ScrollToTop />
         {/* Persistent High-Tech Background Elements */}
         <div className="fixed inset-0 pointer-events-none -z-10 bg-[var(--background)]">
@@ -151,7 +148,7 @@ function AppContent() {
 
         <Navbar />
         <CartDrawer />
-        
+
         <main className="flex-grow z-10 relative pb-20">
           <AnimatedRoutes />
         </main>
