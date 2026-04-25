@@ -76,6 +76,19 @@ export const SERVICES = [
   },
 ];
 
+export const TEMPLATES_CATALOG = [
+  {
+    slug: 'template-pack-full',
+    title: '15-in-1 E-Commerce Template Pack',
+    price: 2999,
+  },
+  ...Array.from({ length: 15 }).map((_, i) => ({
+    slug: `template-${i + 1}`,
+    title: `Premium Template ${String(i + 1).padStart(2, '0')}`,
+    price: 499,
+  }))
+];
+
 export const PORTFOLIO = [
   {
     slug: "rizwan-akram-ecommerce",

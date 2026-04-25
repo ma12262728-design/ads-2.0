@@ -27,8 +27,10 @@ import { supabase } from './lib/supabase';
 import SplashScreen from './components/ui/SplashScreen';
 import { CartProvider } from './context/CartContext';
 import CartDrawer from './components/ui/CartDrawer';
-
 import { Toaster } from 'sonner';
+
+import { TemplateViewer } from './components/TemplateViewer';
+import TemplatesPack from './pages/TemplatesPack';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -83,6 +85,10 @@ function AnimatedRoutes() {
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
+          
+          <Route path="/templates" element={<TemplatesPack />} />
+          <Route path="/templates/view" element={<TemplateViewer />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </motion.div>
@@ -92,6 +98,7 @@ function AnimatedRoutes() {
 
 export default function App() {
   const ThemeProviderAny = ThemeProvider as any;
+
   return (
     <ThemeProviderAny attribute="class" defaultTheme="light">
       <Router>
@@ -104,11 +111,12 @@ export default function App() {
   );
 }
 
-import ChatBot from './components/ChatBot';
-
 function AppContent() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showSplash, setShowSplash] = useState(true);
+
+  const isTemplateViewerRoute = location.pathname.startsWith('/templates/view');
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
@@ -117,6 +125,14 @@ function AppContent() {
 
     return () => subscription.unsubscribe();
   }, [navigate]);
+
+  if (isTemplateViewerRoute) {
+    return (
+      <div className="min-h-screen selection:bg-accent selection:text-black">
+        <AnimatedRoutes />
+      </div>
+    );
+  }
 
   return (
     <>

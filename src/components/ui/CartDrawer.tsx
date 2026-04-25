@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ShoppingCart, Trash2, ArrowRight } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
-import { SERVICES } from '../../constants/data';
+import { SERVICES, TEMPLATES_CATALOG } from '../../constants/data';
 import { useNavigate } from 'react-router-dom';
 
 export default function CartDrawer() {
@@ -14,7 +14,20 @@ export default function CartDrawer() {
     navigate('/order');
   };
 
-  const cartServices = SERVICES.filter(service => cart.includes(service.slug));
+  const getCartItems = () => {
+    return cart.map(slug => {
+      const serviceObj = SERVICES.find(s => s.slug === slug);
+      if (serviceObj) return { ...serviceObj, type: 'Service', price: null };
+      
+      const templateObj = TEMPLATES_CATALOG.find(t => t.slug === slug);
+      if (templateObj) return { ...templateObj, type: 'Template', price: templateObj.price };
+
+      return { slug, title: slug, type: 'Item', price: null };
+    });
+  };
+
+  const cartItems = getCartItems();
+  const totalPrice = cartItems.reduce((acc, curr) => curr.price ? acc + curr.price : acc, 0);
 
   return (
     <AnimatePresence>
@@ -46,7 +59,7 @@ export default function CartDrawer() {
             </div>
 
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
-              {cartServices.length === 0 ? (
+              {cartItems.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center opacity-50 space-y-4">
                   <ShoppingCart className="w-12 h-12 mb-2" />
                   <p className="text-xs uppercase tracking-widest font-bold">Your cart is empty</p>
@@ -55,12 +68,17 @@ export default function CartDrawer() {
                   </button>
                 </div>
               ) : (
-                cartServices.map(item => (
+                cartItems.map(item => (
                   <motion.div layout key={item.slug} className="flex flex-col gap-2 p-4 rounded-xl border border-foreground/10 bg-foreground/5 shadow-inner">
                     <div className="flex items-start justify-between">
                       <div>
                         <h4 className="text-sm font-bold">{item.title}</h4>
-                        <p className="text-[10px] text-foreground/50 mt-1 uppercase tracking-widest">Digital Service</p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <p className="text-[10px] text-foreground/50 uppercase tracking-widest">{item.type}</p>
+                          {item.price && (
+                             <p className="text-[10px] text-accent font-bold uppercase tracking-widest">PKR {item.price}</p>
+                          )}
+                        </div>
                       </div>
                       <button onClick={() => removeFromCart(item.slug)} className="text-red-400 hover:text-red-300 transition-colors p-1 rounded-full hover:bg-red-400/10">
                         <Trash2 className="w-4 h-4" />
@@ -71,8 +89,14 @@ export default function CartDrawer() {
               )}
             </div>
 
-            {cartServices.length > 0 && (
-              <div className="p-6 border-t border-foreground/10 bg-background">
+            {cartItems.length > 0 && (
+              <div className="p-6 border-t border-foreground/10 bg-background space-y-4">
+                {totalPrice > 0 && (
+                  <div className="flex items-center justify-between font-bold text-sm">
+                    <span className="Tracking-widest uppercase">Total</span>
+                    <span className="text-accent">PKR {totalPrice}</span>
+                  </div>
+                )}
                 <button onClick={handleCheckout} className="w-full py-4 btn-bold-primary flex items-center justify-center gap-3 text-xs tracking-widest uppercase relative overflow-hidden group rounded-xl">
                   <span className="relative z-10 flex items-center gap-2">
                     Checkout & Deploy <ArrowRight className="w-4 h-4" />
