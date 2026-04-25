@@ -148,7 +148,7 @@ function AppContent() {
   return (
     <>
       <AnimatePresence mode="wait">
-        {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
+        {showSplash && <SplashScreen key="splash" onComplete={() => setShowSplash(false)} />}
       </AnimatePresence>
 
       <div

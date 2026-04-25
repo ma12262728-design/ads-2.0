@@ -15,13 +15,19 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<string[]>(() => {
-    const saved = localStorage.getItem('ammar_digital_cart');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('ammar_digital_cart');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
   });
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('ammar_digital_cart', JSON.stringify(cart));
+    try {
+      localStorage.setItem('ammar_digital_cart', JSON.stringify(cart));
+    } catch {}
   }, [cart]);
 
   const addToCart = (slug: string) => {
