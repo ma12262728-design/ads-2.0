@@ -1,13 +1,17 @@
 import { useParams, Link } from 'react-router-dom';
 import { SERVICES } from '../constants/data';
 import SectionHeader from '../components/SectionHeader';
-import { ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, ShoppingCart } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 export default function ServiceDetail() {
   const { slug } = useParams();
   const service = SERVICES.find(s => s.slug === slug);
+  const { addToCart, cart } = useCart();
 
   if (!service) return <div className="pt-48 text-center text-white">Service Protocol Not Found</div>;
+
+  const inCart = cart.includes(service.slug);
 
   return (
     <div className="pt-48 pb-24 min-h-screen">
@@ -23,9 +27,17 @@ export default function ServiceDetail() {
             <div className="rounded-[40px] overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] mb-8">
               <img src={service.visual} alt={service.title} className="w-full aspect-video object-cover" />
             </div>
-            <div className="flex gap-4">
-               <Link to="/order" className="flex-1 btn-bold-primary text-center py-4 text-xs tracking-widest uppercase">
-                 Initiate Request
+            <div className="flex flex-col gap-4">
+               <button 
+                 onClick={() => addToCart(service.slug)}
+                 disabled={inCart}
+                 className={`w-full py-5 text-xs tracking-widest uppercase font-black transition-all rounded-xl border flex items-center justify-center gap-3 ${inCart ? 'bg-accent/10 border-accent/20 text-accent/50 cursor-not-allowed' : 'bg-transparent border-accent/50 text-accent hover:bg-accent/10 shadow-[0_0_20px_rgba(0,240,255,0.1)]'}`}
+               >
+                 <ShoppingCart className="w-5 h-5" />
+                 {inCart ? 'Present in Order' : 'Add Capability to Order'}
+               </button>
+               <Link to="/order" className="w-full btn-bold-primary text-center py-5 text-xs tracking-widest uppercase rounded-xl">
+                 Proceed to Checkout
                </Link>
             </div>
           </div>

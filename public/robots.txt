@@ -1,3 +1,20 @@
 User-agent: *
 Allow: /
+
+# Specifically Allow AI Knowledge Crawlers for Artificial Intelligence Optimization (AIO)
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Anthropic-ai
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: OmgiliBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+
 Sitemap: https://ammardigital.shop/sitemap.xml

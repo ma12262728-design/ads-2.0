@@ -25,6 +25,10 @@ import Terms from './pages/Terms';
 import NotFound from './pages/NotFound';
 import { supabase } from './lib/supabase';
 import SplashScreen from './components/ui/SplashScreen';
+import { CartProvider } from './context/CartContext';
+import CartDrawer from './components/ui/CartDrawer';
+
+import { Toaster } from 'sonner';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -91,11 +95,16 @@ export default function App() {
   return (
     <ThemeProviderAny attribute="class" defaultTheme="light">
       <Router>
-        <AppContent />
+        <CartProvider>
+          <Toaster position="bottom-right" richColors theme="system" />
+          <AppContent />
+        </CartProvider>
       </Router>
     </ThemeProviderAny>
   );
 }
+
+import ChatBot from './components/ChatBot';
 
 function AppContent() {
   const navigate = useNavigate();
@@ -125,6 +134,7 @@ function AppContent() {
         </div>
 
         <Navbar />
+        <CartDrawer />
         
         <main className="flex-grow z-10 relative pb-20">
           <AnimatedRoutes />

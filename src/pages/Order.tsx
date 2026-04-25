@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, Clock, CheckCircle } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { SERVICES, BUSINESS_INFO } from '../constants/data';
 import { useSEO } from '../hooks/useSEO';
+import { useCart } from '../context/CartContext';
 
 export default function Order() {
   useSEO("Order Now - Ammar Digital", "Initialize your deployment protocol. Hire Pakistan's top tech agency for custom web development and digital solutions.");
 
+  const { cart, toggleCartItem, clearCart } = useCart();
   const [formData, setFormData] = useState({
     name: '', email: '', phone: '', projectSpecs: ''
   });
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [status, setStatus] = useState<'' | 'submitting' | 'success' | 'error'>('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const toggleService = (slug: string) => {
-    setSelectedServices(prev => 
-      prev.includes(slug) ? prev.filter(s => s !== slug) : [...prev, slug]
-    );
+    toggleCartItem(slug);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -32,7 +31,7 @@ export default function Order() {
       if (formData.phone.length < 10) {
         throw new Error("Invalid phone number format.");
       }
-      if (selectedServices.length === 0) {
+      if (cart.length === 0) {
         throw new Error("Please select at least one capability.");
       }
 
@@ -47,7 +46,7 @@ export default function Order() {
             name: formData.name,
             email: formData.email,
             phone: formData.phone,
-            services_requested: selectedServices.join(', '),
+            services_requested: cart.join(', '),
             project_specifications: formData.projectSpecs,
             _subject: `New Deployment Request from Ammar Digital: ${formData.name}`,
             _template: 'box'
@@ -60,7 +59,7 @@ export default function Order() {
       
       setStatus('success');
       setFormData({ name: '', email: '', phone: '', projectSpecs: '' });
-      setSelectedServices([]);
+      clearCart();
     } catch (err: any) {
        console.error("Order submission err:", err);
        setStatus('error');
@@ -128,7 +127,7 @@ export default function Order() {
                       whileTap={{ scale: 0.98 }}
                       key={s.slug} 
                       onClick={() => toggleService(s.slug)}
-                      className={`cursor-pointer p-5 rounded-xl border flex items-center justify-center text-center transition-all ${selectedServices.includes(s.slug) ? 'bg-accent/10 border-accent font-black text-accent shadow-[0_0_20px_rgba(0,240,255,0.15)] ring-1 ring-accent/50' : 'bg-[var(--background)] border-foreground/10 text-foreground/50 hover:border-accent/40 hover:text-foreground'}`}
+                      className={`cursor-pointer p-5 rounded-xl border flex items-center justify-center text-center transition-all ${cart.includes(s.slug) ? 'bg-accent/10 border-accent font-black text-accent shadow-[0_0_20px_rgba(0,240,255,0.15)] ring-1 ring-accent/50' : 'bg-[var(--background)] border-foreground/10 text-foreground/50 hover:border-accent/40 hover:text-foreground'}`}
                     >
                        <span className="text-xs uppercase tracking-wider leading-tight">{s.title}</span>
                     </motion.div>

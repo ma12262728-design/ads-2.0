@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { Menu, X, LogOut, User, Sun, Moon } from 'lucide-react';
+import { Menu, X, LogOut, User, Sun, Moon, ShoppingCart } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useTheme } from 'next-themes';
 import { supabase } from '../lib/supabase';
 import { buttonVariants } from './ui/button';
 import { cn } from '@/lib/utils';
+import { useCart } from '../context/CartContext';
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -14,7 +15,6 @@ const navLinks = [
   { name: 'Portfolio', path: '/portfolio' },
   { name: 'Blog', path: '/blog' },
   { name: 'Contact', path: '/contact' },
-  { name: 'Order Now', path: '/order' },
 ];
 
 export default function Navbar() {
@@ -24,6 +24,7 @@ export default function Navbar() {
   const [session, setSession] = useState<any>(null);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const { cart, setIsCartOpen } = useCart();
 
   useEffect(() => {
     setMounted(true);
@@ -93,7 +94,13 @@ export default function Navbar() {
                 </NavLink>
               ))}
             </div>
-                        <div className="flex gap-2 mr-2">
+            
+            <div className="flex gap-2 mr-2">
+              <button onClick={() => setIsCartOpen(true)} className="relative px-3 py-2 text-foreground hover:text-accent transition-colors rounded-full flex items-center justify-center border border-foreground/10 hover:border-accent/40 bg-foreground/5">
+                 <ShoppingCart size={16} />
+                 {cart.length > 0 && <span className="absolute -top-1 -right-1 bg-accent text-white text-[9px] font-black w-4 h-4 flex items-center justify-center rounded-full shadow-[0_0_10px_rgba(0,240,255,0.5)]">{cart.length}</span>}
+              </button>
+              
               {session ? (
                 <>
                   <Link to={isAdmin ? "/admin" : "/dashboard"} className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-accent hover:text-foreground transition-colors rounded-full flex items-center gap-2">
@@ -125,6 +132,10 @@ export default function Navbar() {
 
           {/* Mobile Actions */}
           <div className="flex md:hidden items-center gap-2">
+            <button onClick={() => setIsCartOpen(true)} className="relative p-2 text-foreground hover:text-accent transition-colors mr-2">
+                 <ShoppingCart size={20} />
+                 {cart.length > 0 && <span className="absolute top-0 right-0 bg-accent text-white text-[9px] font-black w-4 h-4 flex items-center justify-center rounded-full shadow-[0_0_10px_rgba(0,240,255,0.5)]">{cart.length}</span>}
+            </button>
             <button
               onClick={toggleMenu}
               className="p-2 text-foreground hover:text-accent transition-colors"
@@ -160,10 +171,48 @@ export default function Navbar() {
                   {link.name}
                 </NavLink>
               ))}
+              <div className="h-px bg-foreground/10 my-2" />
+              {session ? (
+                <>
+                  <Link
+                    to={isAdmin ? "/admin" : "/dashboard"}
+                    onClick={() => setIsOpen(false)}
+                    className="text-lg font-display font-extrabold uppercase tracking-widest text-accent flex items-center gap-2"
+                  >
+                    <User size={20} /> {isAdmin ? 'Admin' : 'Dashboard'}
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsOpen(false);
+                    }}
+                    className="text-lg font-display font-extrabold uppercase tracking-widest text-red-500 flex items-center gap-2 justify-start"
+                  >
+                    <LogOut size={20} /> Exit
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/auth?mode=signin"
+                    onClick={() => setIsOpen(false)}
+                    className="text-lg font-display font-extrabold uppercase tracking-widest text-gray-text hover:text-accent transition-colors"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/auth?mode=signup"
+                    onClick={() => setIsOpen(false)}
+                    className="text-lg font-display font-extrabold uppercase tracking-widest text-gray-text hover:text-accent transition-colors"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
               <Link
                 to="/order"
                 onClick={() => setIsOpen(false)}
-                className="btn-bold-primary text-center py-4 text-sm"
+                className="btn-bold-primary text-center py-4 text-sm mt-2"
               >
                 Initiate Order Protocol
               </Link>

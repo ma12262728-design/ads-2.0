@@ -56,14 +56,26 @@ export default function BlogPost() {
       "@context": "https://schema.org",
       "@type": "Article",
       "headline": post.title,
-      "image": post.image_url,
+      "description": post.excerpt,
+      "image": post.image_url || "https://ammardigital.shop/og-image.jpg",
       "datePublished": new Date(post.created_at).toISOString(),
+      "dateModified": new Date(post.created_at).toISOString(),
       "author": [{
           "@type": "Person",
           "name": post.author,
           "url": "https://ammardigital.shop/about"
-        }]
-    } : undefined
+        }],
+      "publisher": {
+        "@type": "Organization",
+        "name": "Ammar Digital",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://ammardigital.shop/logo.png"
+        }
+      }
+    } : undefined,
+    false,
+    post?.category ? `${post.category}, technology, software engineering, web development, ammar digital, custom solutions, startup` : "technology, web development, custom solutions"
   );
 
   const handleShare = () => {
@@ -97,7 +109,7 @@ export default function BlogPost() {
   }
 
   return (
-    <div className="min-h-screen pt-32 pb-24">
+    <article className="min-h-screen pt-32 pb-24">
       <div className="container-custom max-w-4xl">
         {/* Navigation */}
         <motion.div 
@@ -111,7 +123,7 @@ export default function BlogPost() {
         </motion.div>
 
         {/* Hero Section */}
-        <div className="mb-16">
+        <header className="mb-16">
           <div className="flex flex-wrap items-center gap-4 mb-8">
             <span className="bg-accent/10 border border-accent/20 text-accent px-5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest backdrop-blur-md">
               {post.category}
@@ -151,11 +163,12 @@ export default function BlogPost() {
             <button 
               onClick={handleShare}
               className="w-12 h-12 rounded-2xl bg-foreground/5 border border-foreground/10 flex items-center justify-center text-foreground hover:bg-accent hover:text-black transition-all group"
+              aria-label="Share this post"
             >
               <Share2 size={18} className="group-hover:scale-110 transition-transform" />
             </button>
           </div>
-        </div>
+        </header>
 
         {/* Featured Image */}
         <motion.div 
@@ -185,7 +198,7 @@ export default function BlogPost() {
              </div>
 
              {/* Footer Interaction */}
-             <div className="mt-24 p-12 bg-foreground/[0.02] border border-foreground/[0.05] rounded-[48px] text-center relative overflow-hidden group">
+             <footer className="mt-24 p-12 bg-foreground/[0.02] border border-foreground/[0.05] rounded-[48px] text-center relative overflow-hidden group">
                 <div className="absolute inset-0 bg-accent/2 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <h4 className="text-2xl font-black text-foreground uppercase tracking-widest mb-6">Found this intel useful?</h4>
                 <p className="text-muted-foreground text-sm max-w-md mx-auto mb-10 leading-relaxed">Share it across the network to help other digital architects build better infrastructures.</p>
@@ -203,10 +216,10 @@ export default function BlogPost() {
                      Return to Archive
                    </Link>
                 </div>
-             </div>
+             </footer>
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
